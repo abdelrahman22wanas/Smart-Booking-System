@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartBooking — Appointment System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+
+<!-- 01 · NAVIGATION -->
+<nav>
+  <a href="smartbooking.html" class="logo">Smart<span>Booking</span></a>
+  <ul>
+    <li><a href="smartbooking.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="book-appointment.html">Book Appointment</a></li>
+    <li><a href="my-appointments.html">My Appointments</a></li>
+    <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
+    <li><a href="contact.html">Contact Us</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="login.html" class="btn-login">Login</a></li>
+  </ul>
+</nav>
+
+<!-- 02 · HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Appointment System v1.0</div>
+    <h1 class="hero-title">Book Your<br/><em>Appointment</em><br/>in Seconds</h1>
+    <p class="hero-sub">Smart scheduling system with real-time availability and instant notifications.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Book Appointment</a>
+      <a href="#services" class="btn-outline">View Services</a>
+      <a href="register.html" class="btn-outline">Create Account</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="calendar-card">
+      <div class="cal-header">
+        <span class="cal-month">March 2026</span>
+        <div class="cal-nav">
+          <button>&#8249;</button>
+          <button>&#8250;</button>
+        </div>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-day-label">Su</div><div class="cal-day-label">Mo</div><div class="cal-day-label">Tu</div>
+        <div class="cal-day-label">We</div><div class="cal-day-label">Th</div><div class="cal-day-label">Fr</div>
+        <div class="cal-day-label">Sa</div>
+
+        <div class="cal-day other">23</div><div class="cal-day other">24</div><div class="cal-day other">25</div>
+        <div class="cal-day other">26</div><div class="cal-day other">27</div><div class="cal-day other">28</div><div class="cal-day">1</div>
+        <div class="cal-day">2</div><div class="cal-day available">3</div><div class="cal-day available">4</div>
+        <div class="cal-day available">5</div><div class="cal-day available">6</div><div class="cal-day today">7</div><div class="cal-day">8</div>
+        <div class="cal-day">9</div><div class="cal-day available">10</div><div class="cal-day available">11</div>
+        <div class="cal-day">12</div><div class="cal-day available">13</div><div class="cal-day">14</div><div class="cal-day">15</div>
+        <div class="cal-day available">16</div><div class="cal-day">17</div><div class="cal-day available">18</div>
+        <div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day available">21</div><div class="cal-day">22</div>
+        <div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
+        <div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div>
+        <div class="cal-day">30</div><div class="cal-day">31</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · QUICK BOOKING PANEL -->
+<section class="booking-section" id="booking">
+  <div class="section-label">Quick Booking</div>
+  <h2 class="section-title">Reserve Your Slot</h2>
+  <div class="booking-grid">
+    <div class="booking-field">
+      <label>SELECT SERVICE</label>
+      <select>
+        <option value="">Choose a service…</option>
+        <option>General Consultation</option>
+        <option>Follow-up Visit</option>
+        <option>Technical Support</option>
+        <option>Advisory Session</option>
+      </select>
+    </div>
+    <div class="booking-field">
+      <label>SELECT DATE</label>
+      <input type="date" placeholder="MM / DD / YYYY"/>
+    </div>
+    <div class="booking-field">
+      <label>SELECT TIME SLOT</label>
+      <select>
+        <option value="">Available slots…</option>
+        <option>10:00 AM</option>
+        <option>11:00 AM</option>
+        <option>11:30 AM</option>
+        <option>1:00 PM</option>
+        <option>3:00 PM</option>
+      </select>
+    </div>
+  </div>
+  <button class="btn-check">Check Availability →</button>
+</section>
+
+<!-- 04 · HOW IT WORKS -->
+<section class="how-section" id="services">
+  <div class="section-label">Process</div>
+  <h2 class="section-title">How It Works</h2>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-icon">👤</div>
+      <h3>Create Account</h3>
+      <p>Register or log in to your secure account.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-icon">📋</div>
+      <h3>Choose Service</h3>
+      <p>Pick the service type that suits your needs.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-icon">🕐</div>
+      <h3>Select Time Slot</h3>
+      <p>View real-time availability and pick a slot.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-icon">✉️</div>
+      <h3>Confirm &amp; Get Email</h3>
+      <p>Receive instant email confirmation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · FEATURES -->
+<section class="features-section">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything You Need</h2>
+  <div class="features-list">
+    <div class="feature-item">Real-time availability</div>
+    <div class="feature-item">Automatic email notifications</div>
+    <div class="feature-item">Conflict-free scheduling</div>
+    <div class="feature-item">Secure user accounts</div>
+    <div class="feature-item">Admin dashboard for managing bookings</div>
+    <div class="feature-item">Multi-device support</div>
+  </div>
+</section>
+
+<!-- 06 · UPCOMING SLOTS -->
+<section class="slots-section" id="appointments">
+  <div class="slots-header">
+    <div>
+      <div class="section-label">Availability</div>
+      <h2 class="section-title">Today's Available Appointments<br/><small class="section-subtitle">March 07, 2026</small></h2>
+    </div>
+    <a href="login.html">View Full Schedule →</a>
+  </div>
+  <div class="slots-row">
+    <div class="slot">10:00 AM</div>
+    <div class="slot active">11:00 AM</div>
+    <div class="slot">11:30 AM</div>
+    <div class="slot">12:00 PM</div>
+    <div class="slot">1:00 PM</div>
+    <div class="slot">3:00 PM</div>
+    <div class="slot">4:00 PM</div>
+    <div class="slot">5:00 PM</div>
+  </div>
+</section>
+
+<!-- 07 · TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="testimonial-card">
+    <div class="stars">★ ★ ★ ★ ★</div>
+    <p class="testimonial-text">"The system made booking appointments extremely easy!"</p>
+    <p class="testimonial-author">— USER REVIEW · VERIFIED CUSTOMER</p>
+  </div>
+</section>
+
+<!-- 08 · CTA -->
+<section class="cta-section">
+  <h2>Ready to schedule your<br/>appointment?</h2>
+  <a href="book-appointment.html" class="btn-primary cta-btn">Book Now →</a>
+</section>
+
+<!-- 09 · FOOTER -->
+<footer id="contact">
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">SmartBooking</div>
+      <p class="footer-desc">Smart scheduling system with real-time availability and instant notifications for everyone.</p>
+      <div class="footer-contact">
+        <span>📧 support@smartbooking.com</span>
+        <span>📞 +20 XXX XXX XXXX</span>
+      </div>
+      <div class="socials">
+        <a href="#">FB</a>
+        <a href="#">IG</a>
+        <a href="#">LI</a>
+      </div>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="smartbooking.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="book-appointment.html">Book Appointment</a></li>
+        <li><a href="my-appointments.html">My Appointments</a></li>
+        <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 SmartBooking · All rights reserved</div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

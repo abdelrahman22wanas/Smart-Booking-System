@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartBooking — Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f3ee;
+      --surface: #ffffff;
+      --ink: #131210;
+      --ink-muted: #6b6860;
+      --accent: #1a6b4a;
+      --accent-light: #e8f5ef;
+      --accent2: #f0a500;
+      --border: #e0ddd6;
+      --radius: 14px;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    h1,h2,h3 { font-family: 'Syne', sans-serif; }
+
+    /* LEFT PANEL */
+    .left-panel {
+      background: var(--ink);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,107,74,0.35) 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+      pointer-events: none;
+    }
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,165,0,0.18) 0%, transparent 70%);
+      top: -80px; left: -80px;
+      pointer-events: none;
+    }
+    .panel-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.4rem;
+      color: var(--accent);
+      text-decoration: none;
+      position: relative; z-index: 1;
+    }
+    .panel-logo span { color: #fff; }
+    .panel-content { position: relative; z-index: 1; }
+    .panel-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(240,165,0,0.15); color: var(--accent2);
+      padding: .3rem .9rem; border-radius: 99px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .05em;
+      margin-bottom: 1.5rem;
+    }
+    .panel-tag::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--accent2); }
+    .panel-content h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800; color: #fff;
+      line-height: 1.15; letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+    .panel-content h2 em { font-style: normal; color: #6ee9a8; }
+    .panel-content p { color: rgba(255,255,255,.55); font-size: .95rem; line-height: 1.7; max-width: 380px; }
+
+    .steps-list {
+      margin-top: 2.2rem;
+      display: flex; flex-direction: column; gap: 1.1rem;
+      position: relative; z-index: 1;
+    }
+    .step-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .step-bubble {
+      width: 32px; height: 32px; min-width: 32px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne',sans-serif; font-weight: 800; font-size: .8rem; color: #fff;
+    }
+    .step-item-text strong { display: block; color: #fff; font-size: .9rem; margin-bottom: .1rem; }
+    .step-item-text span { color: rgba(255,255,255,.45); font-size: .82rem; }
+
+    .panel-bottom { color: rgba(255,255,255,.25); font-size: .78rem; position: relative; z-index: 1; }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 4rem;
+      overflow-y: auto;
+    }
+    .form-box { width: 100%; max-width: 420px; animation: fadeUp .6s ease both; }
+    .form-box h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.8px; margin-bottom: .4rem; }
+    .form-box .subtitle { color: var(--ink-muted); font-size: .92rem; margin-bottom: 2rem; }
+    .form-box .subtitle a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label {
+      display: block; font-size: .82rem; font-weight: 600;
+      color: var(--ink-muted); margin-bottom: .4rem; letter-spacing: .02em;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap .icon {
+      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; color: var(--ink-muted);
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: .8rem 1rem .8rem 2.8rem;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif; font-size: .95rem;
+      background: var(--bg); color: var(--ink);
+      outline: none; transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    .form-group select { padding-left: 2.8rem; }
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(26,107,74,.1);
+    }
+    .password-strength {
+      margin-top: .5rem;
+      display: flex; gap: .3rem;
+    }
+    .strength-bar {
+      flex: 1; height: 3px; border-radius: 99px;
+      background: var(--border); transition: background .3s;
+    }
+    .strength-bar.weak { background: #ef4444; }
+    .strength-bar.medium { background: var(--accent2); }
+    .strength-bar.strong { background: var(--accent); }
+    .strength-label { font-size: .75rem; color: var(--ink-muted); margin-top: .3rem; }
+
+    .terms {
+      display: flex; align-items: flex-start; gap: .6rem;
+      margin: 1.2rem 0; font-size: .85rem; color: var(--ink-muted);
+      line-height: 1.5;
+    }
+    .terms input[type="checkbox"] { accent-color: var(--accent); width: 15px; height: 15px; margin-top: 2px; flex-shrink: 0; }
+    .terms a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    .btn-submit {
+      width: 100%; padding: .9rem;
+      background: var(--accent); color: #fff; border: none; cursor: pointer;
+      border-radius: 99px; font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      transition: transform .18s, box-shadow .18s;
+      box-shadow: 0 4px 16px rgba(26,107,74,.25);
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.3); }
+
+    .divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 1.4rem 0; color: var(--ink-muted); font-size: .82rem;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .btn-google {
+      width: 100%; padding: .8rem;
+      background: var(--surface); color: var(--ink);
+      border: 1.5px solid var(--border); border-radius: 99px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500;
+      display: flex; align-items: center; justify-content: center; gap: .6rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .btn-google:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+
+    .login-link {
+      text-align: center; margin-top: 1.6rem;
+      font-size: .88rem; color: var(--ink-muted);
+    }
+    .login-link a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .login-link a:hover { text-decoration: underline; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      body { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel { padding: 2rem 1.5rem; }
+      .form-row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <a href="smartbooking.html" class="panel-logo">Smart<span>Booking</span></a>
+  <div class="panel-content">
+    <div class="panel-tag">Get Started Today</div>
+    <h2>Start Booking<br/>Smarter,<br/><em>Right Now</em></h2>
+    <p>Create your free account and start scheduling appointments in seconds. Real-time availability, zero conflicts.</p>
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-bubble">01</div>
+        <div class="step-item-text">
+          <strong>Create Your Account</strong>
+          <span>Fill in your details — takes less than a minute.</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-bubble">02</div>
+        <div class="step-item-text">
+          <strong>Choose a Service</strong>
+          <span>Pick from our list of available services.</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-bubble">03</div>
+        <div class="step-item-text">
+          <strong>Book & Confirm</strong>
+          <span>Get instant email confirmation of your appointment.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-bottom">© 2026 SmartBooking · All rights reserved</div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <div class="form-box">
+    <h1>Create Account</h1>
+    <p class="subtitle">Already have an account? <a href="login.html">Sign in →</a></p>
+
+    <div class="form-row-2">
+      <div class="form-group">
+        <label>FIRST NAME</label>
+        <div class="input-wrap">
+          <span class="icon">👤</span>
+          <input type="text" placeholder="John"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>LAST NAME</label>
+        <div class="input-wrap">
+          <span class="icon">👤</span>
+          <input type="text" placeholder="Doe"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>EMAIL ADDRESS</label>
+      <div class="input-wrap">
+        <span class="icon">📧</span>
+        <input type="email" placeholder="you@example.com"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>PHONE NUMBER</label>
+      <div class="input-wrap">
+        <span class="icon">📞</span>
+        <input type="tel" placeholder="+20 XXX XXX XXXX"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>PASSWORD</label>
+      <div class="input-wrap">
+        <span class="icon">🔒</span>
+        <input type="password" id="password" placeholder="Create a strong password" oninput="checkStrength(this.value)"/>
+      </div>
+      <div class="password-strength">
+        <div class="strength-bar" id="bar1"></div>
+        <div class="strength-bar" id="bar2"></div>
+        <div class="strength-bar" id="bar3"></div>
+        <div class="strength-bar" id="bar4"></div>
+      </div>
+      <div class="strength-label" id="strength-label">Enter a password</div>
+    </div>
+
+    <div class="form-group">
+      <label>CONFIRM PASSWORD</label>
+      <div class="input-wrap">
+        <span class="icon">🔒</span>
+        <input type="password" placeholder="Repeat your password"/>
+      </div>
+    </div>
+
+    <label class="terms">
+      <input type="checkbox"/>
+      I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a> of SmartBooking.
+    </label>
+
+    <button class="btn-submit">Create Account →</button>
+
+    <div class="divider">or sign up with</div>
+
+    <button class="btn-google">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </button>
+
+    <div class="login-link">
+      Already have an account? <a href="login.html">Sign in</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function checkStrength(val) {
+    const bars = [document.getElementById('bar1'), document.getElementById('bar2'),
+                  document.getElementById('bar3'), document.getElementById('bar4')];
+    const label = document.getElementById('strength-label');
+    bars.forEach(b => { b.className = 'strength-bar'; });
+
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = ['', 'weak', 'medium', 'strong', 'strong'];
+    const labels = ['Enter a password', 'Weak', 'Medium', 'Strong', 'Very Strong'];
+    for (let i = 0; i < score; i++) bars[i].classList.add(levels[score]);
+    label.textContent = val.length === 0 ? 'Enter a password' : labels[score];
+  }
+</script>
+
+</body>
+</html>
