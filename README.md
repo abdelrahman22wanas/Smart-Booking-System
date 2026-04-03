@@ -4,6 +4,7 @@ SmartBooking is a multi-page appointment booking website with user and admin flo
 
 ## Website Structure (Sitemap)
 
+- Welcome: `welcome.html`
 - Home: `smartbooking.html`
 - About Us: `about.html`
 - Login: `login.html`
