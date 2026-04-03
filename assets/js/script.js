@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+  setupSlotButtons();
+});
+
+function setupSlotButtons() {
   const slotButtons = document.querySelectorAll('.slot');
 
   slotButtons.forEach((slotButton) => {
@@ -6,4 +10,5 @@ document.addEventListener('DOMContentLoaded', () => {
       slotButton.classList.toggle('active');
     });
   });
-});
+}
+
