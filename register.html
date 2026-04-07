@@ -28,7 +28,6 @@
     }
     h1,h2,h3 { font-family: 'Syne', sans-serif; }
 
-    /* LEFT PANEL */
     .left-panel {
       background: var(--ink);
       padding: 3rem;
@@ -103,7 +102,6 @@
 
     .panel-bottom { color: rgba(255,255,255,.25); font-size: .78rem; position: relative; z-index: 1; }
 
-    /* RIGHT PANEL */
     .right-panel {
       display: flex; align-items: center; justify-content: center;
       padding: 3rem 4rem;
@@ -197,7 +195,6 @@
 </head>
 <body>
 
-<!-- LEFT PANEL -->
 <div class="left-panel">
   <a href="smartbooking.html" class="panel-logo">Smart<span>Booking</span></a>
   <div class="panel-content">
@@ -231,74 +228,76 @@
   <div class="panel-bottom">© 2026 SmartBooking · All rights reserved</div>
 </div>
 
-<!-- RIGHT PANEL -->
 <div class="right-panel">
   <div class="form-box">
     <h1>Create Account</h1>
     <p class="subtitle">Already have an account? <a href="login.html">Sign in →</a></p>
 
-    <div class="form-row-2">
-      <div class="form-group">
-        <label>FIRST NAME</label>
-        <div class="input-wrap">
-          <span class="icon">👤</span>
-          <input type="text" placeholder="John"/>
+    <form id="registerForm">
+      <div class="form-row-2">
+        <div class="form-group">
+          <label for="regFirstName">FIRST NAME</label>
+          <div class="input-wrap">
+            <span class="icon">👤</span>
+            <input id="regFirstName" type="text" placeholder="John" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regLastName">LAST NAME</label>
+          <div class="input-wrap">
+            <span class="icon">👤</span>
+            <input id="regLastName" type="text" placeholder="Doe" required />
+          </div>
         </div>
       </div>
+
       <div class="form-group">
-        <label>LAST NAME</label>
+        <label for="regEmail">EMAIL ADDRESS</label>
         <div class="input-wrap">
-          <span class="icon">👤</span>
-          <input type="text" placeholder="Doe"/>
+          <span class="icon">📧</span>
+          <input id="regEmail" type="email" placeholder="you@example.com" required />
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>EMAIL ADDRESS</label>
-      <div class="input-wrap">
-        <span class="icon">📧</span>
-        <input type="email" placeholder="you@example.com"/>
+      <div class="form-group">
+        <label for="regPhone">PHONE NUMBER</label>
+        <div class="input-wrap">
+          <span class="icon">📞</span>
+          <input id="regPhone" type="tel" placeholder="+20 XXX XXX XXXX" required />
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>PHONE NUMBER</label>
-      <div class="input-wrap">
-        <span class="icon">📞</span>
-        <input type="tel" placeholder="+20 XXX XXX XXXX"/>
+      <div class="form-group">
+        <label for="password">PASSWORD</label>
+        <div class="input-wrap">
+          <span class="icon">🔒</span>
+          <input type="password" id="password" placeholder="Create a strong password" oninput="checkStrength(this.value)" required />
+        </div>
+        <div class="password-strength">
+          <div class="strength-bar" id="bar1"></div>
+          <div class="strength-bar" id="bar2"></div>
+          <div class="strength-bar" id="bar3"></div>
+          <div class="strength-bar" id="bar4"></div>
+        </div>
+        <div class="strength-label" id="strength-label">Enter a password</div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>PASSWORD</label>
-      <div class="input-wrap">
-        <span class="icon">🔒</span>
-        <input type="password" id="password" placeholder="Create a strong password" oninput="checkStrength(this.value)"/>
+      <div class="form-group">
+        <label for="regConfirmPassword">CONFIRM PASSWORD</label>
+        <div class="input-wrap">
+          <span class="icon">🔒</span>
+          <input id="regConfirmPassword" type="password" placeholder="Repeat your password" required />
+        </div>
       </div>
-      <div class="password-strength">
-        <div class="strength-bar" id="bar1"></div>
-        <div class="strength-bar" id="bar2"></div>
-        <div class="strength-bar" id="bar3"></div>
-        <div class="strength-bar" id="bar4"></div>
-      </div>
-      <div class="strength-label" id="strength-label">Enter a password</div>
-    </div>
 
-    <div class="form-group">
-      <label>CONFIRM PASSWORD</label>
-      <div class="input-wrap">
-        <span class="icon">🔒</span>
-        <input type="password" placeholder="Repeat your password"/>
-      </div>
-    </div>
+      <label class="terms">
+        <input id="regTerms" type="checkbox" />
+        I agree to the SmartBooking terms and privacy policy.
+      </label>
 
-    <label class="terms">
-      <input type="checkbox"/>
-      I agree to the SmartBooking terms and privacy policy.
-    </label>
-
-    <button class="btn-submit">Create Account →</button>
+      <button class="btn-submit" type="submit">Create Account →</button>
+      <p id="registerMessage" style="margin-top: .9rem; font-size: .86rem;"></p>
+    </form>
 
     <div class="login-link">
       Already have an account? <a href="login.html">Sign in</a>

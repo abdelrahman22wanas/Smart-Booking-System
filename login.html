@@ -28,7 +28,6 @@
     }
     h1,h2,h3 { font-family: 'Syne', sans-serif; }
 
-    /* LEFT PANEL */
     .left-panel {
       background: var(--ink);
       padding: 3rem;
@@ -100,7 +99,6 @@
     }
     .panel-bottom { color: rgba(255,255,255,.25); font-size: .78rem; position: relative; z-index: 1; }
 
-    /* RIGHT PANEL */
     .right-panel {
       display: flex; align-items: center; justify-content: center;
       padding: 3rem 4rem;
@@ -175,7 +173,6 @@
 </head>
 <body>
 
-<!-- LEFT PANEL -->
 <div class="left-panel">
   <a href="smartbooking.html" class="panel-logo">Smart<span>Booking</span></a>
   <div class="panel-content">
@@ -190,36 +187,38 @@
   <div class="panel-bottom">© 2026 SmartBooking · All rights reserved</div>
 </div>
 
-<!-- RIGHT PANEL -->
 <div class="right-panel">
   <div class="form-box">
     <h1>Sign In</h1>
     <p class="subtitle">Don't have an account? <a href="register.html">Create one →</a></p>
 
-    <div class="form-group">
-      <label>EMAIL ADDRESS</label>
-      <div class="input-wrap">
-        <span class="icon">📧</span>
-        <input type="email" placeholder="you@example.com"/>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">EMAIL ADDRESS</label>
+        <div class="input-wrap">
+          <span class="icon">📧</span>
+          <input id="loginEmail" type="email" placeholder="you@example.com" required />
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>PASSWORD</label>
-      <div class="input-wrap">
-        <span class="icon">🔒</span>
-        <input type="password" placeholder="Enter your password"/>
+      <div class="form-group">
+        <label for="loginPassword">PASSWORD</label>
+        <div class="input-wrap">
+          <span class="icon">🔒</span>
+          <input id="loginPassword" type="password" placeholder="Enter your password" required />
+        </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <label class="remember">
-        <input type="checkbox"/> Remember me
-      </label>
-      <a href="register.html" class="forgot">Need help?</a>
-    </div>
+      <div class="form-row">
+        <label class="remember">
+          <input type="checkbox"/> Remember me
+        </label>
+        <a href="register.html" class="forgot">Need help?</a>
+      </div>
 
-    <button class="btn-submit">Sign In →</button>
+      <button class="btn-submit" type="submit">Sign In →</button>
+      <p id="loginMessage" style="margin-top: .9rem; font-size: .86rem;"></p>
+    </form>
 
     <div class="register-link">
       New to SmartBooking? <a href="register.html">Create an account</a>

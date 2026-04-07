@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- 01 · NAVIGATION -->
 <nav>
   <a href="smartbooking.html" class="logo">Smart<span>Booking</span></a>
   <ul>
@@ -22,7 +21,6 @@
   </ul>
 </nav>
 
-<!-- 02 · HERO -->
 <section class="hero">
   <div class="hero-text">
     <h1 class="hero-title">Book Your<br/><em>Appointment</em><br/>in Seconds</h1>
@@ -64,14 +62,13 @@
   </div>
 </section>
 
-<!-- 03 · QUICK BOOKING PANEL -->
 <section class="booking-section" id="booking">
   <div class="section-label">Quick Booking</div>
   <h2 class="section-title">Reserve Your Slot</h2>
   <div class="booking-grid">
     <div class="booking-field">
       <label>SELECT SERVICE</label>
-      <select>
+      <select id="quickService">
         <option value="">Choose a service…</option>
         <option>General Consultation</option>
         <option>Follow-up Visit</option>
@@ -81,11 +78,11 @@
     </div>
     <div class="booking-field">
       <label>SELECT DATE</label>
-      <input type="date" placeholder="MM / DD / YYYY"/>
+      <input id="quickDate" type="date" placeholder="MM / DD / YYYY"/>
     </div>
     <div class="booking-field">
       <label>SELECT TIME SLOT</label>
-      <select>
+      <select id="quickTime">
         <option value="">Available slots…</option>
         <option>10:00 AM</option>
         <option>11:00 AM</option>
@@ -95,10 +92,9 @@
       </select>
     </div>
   </div>
-  <button class="btn-check">Check Availability →</button>
+  <button id="quickCheckBtn" class="btn-check">Check Availability →</button>
 </section>
 
-<!-- 04 · HOW IT WORKS -->
 <section class="how-section" id="services">
   <div class="section-label">Process</div>
   <h2 class="section-title">How It Works</h2>
@@ -130,7 +126,6 @@
   </div>
 </section>
 
-<!-- 05 · FEATURES -->
 <section class="features-section">
   <div class="section-label">Features</div>
   <h2 class="section-title">Everything You Need</h2>
@@ -144,28 +139,27 @@
   </div>
 </section>
 
-<!-- 06 · UPCOMING SLOTS -->
 <section class="slots-section" id="appointments">
   <div class="slots-header">
     <div>
       <div class="section-label">Availability</div>
       <h2 class="section-title">Today's Available Appointments<br/><small class="section-subtitle">March 07, 2026</small></h2>
     </div>
-    <a href="login.html">View Full Schedule →</a>
+    <a href="book-appointment.html">Book a Slot →</a>
   </div>
+  <p class="slots-summary" id="availabilitySummary">Loading available slots...</p>
   <div class="slots-row">
-    <div class="slot">10:00 AM</div>
-    <div class="slot active">11:00 AM</div>
-    <div class="slot">11:30 AM</div>
-    <div class="slot">12:00 PM</div>
-    <div class="slot">1:00 PM</div>
-    <div class="slot">3:00 PM</div>
-    <div class="slot">4:00 PM</div>
-    <div class="slot">5:00 PM</div>
+    <button type="button" class="slot" data-time="10:00 AM">10:00 AM</button>
+    <button type="button" class="slot active" data-time="11:00 AM">11:00 AM</button>
+    <button type="button" class="slot" data-time="11:30 AM">11:30 AM</button>
+    <button type="button" class="slot" data-time="12:00 PM">12:00 PM</button>
+    <button type="button" class="slot" data-time="1:00 PM">1:00 PM</button>
+    <button type="button" class="slot" data-time="3:00 PM">3:00 PM</button>
+    <button type="button" class="slot" data-time="4:00 PM">4:00 PM</button>
+    <button type="button" class="slot" data-time="5:00 PM">5:00 PM</button>
   </div>
 </section>
 
-<!-- 07 · TESTIMONIALS -->
 <section class="testimonial-section">
   <div class="testimonial-card">
     <div class="stars">★ ★ ★ ★ ★</div>
@@ -174,13 +168,11 @@
   </div>
 </section>
 
-<!-- 08 · CTA -->
 <section class="cta-section">
   <h2>Ready to schedule your<br/>appointment?</h2>
   <a href="book-appointment.html" class="btn-primary cta-btn">Book Now →</a>
 </section>
 
-<!-- 09 · FOOTER -->
 <footer id="contact">
   <div class="footer-top">
     <div>

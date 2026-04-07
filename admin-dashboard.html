@@ -36,43 +36,6 @@
     <div id="admin-root" class="panel p-4 p-md-5"></div>
   </main>
 
-  <script>
-    const todays = [
-      { user: 'Ava', service: 'Consultation', time: '10:00 AM' },
-      { user: 'Noah', service: 'Support', time: '11:30 AM' },
-      { user: 'Mia', service: 'Follow-up', time: '03:00 PM' }
-    ];
-
-    const stats = [
-      { title: 'Total Bookings', value: '128' },
-      { title: 'Today Appointments', value: '24' },
-      { title: 'Pending Requests', value: '7' }
-    ];
-
-    const statsHtml = stats.map((item) => `
-      <div class="col-md-4">
-        <div class="p-3 rounded border bg-light">
-          <div class="text-secondary small">${item.title}</div>
-          <div class="h4 fw-bold mb-0">${item.value}</div>
-        </div>
-      </div>
-    `).join('');
-
-    const scheduleHtml = todays.map((item) => `
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>${item.user} - ${item.service}</span>
-        <span class="badge text-bg-secondary">${item.time}</span>
-      </li>
-    `).join('');
-
-    document.getElementById('admin-root').innerHTML = `
-      <h1 class="h3 fw-bold mb-3">Admin Dashboard</h1>
-      <p class="text-secondary mb-4">Built with basic JavaScript + Bootstrap 5</p>
-      <div class="row g-3 mb-4">${statsHtml}</div>
-      <h2 class="h5 fw-bold mb-3">Today Schedule</h2>
-      <ul class="list-group">${scheduleHtml}</ul>
-    `;
-  </script>
   <script src="assets/js/script.js"></script>
 </body>
 </html>
