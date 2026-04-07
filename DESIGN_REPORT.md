@@ -1,11 +1,11 @@
 # SmartBooking Design Report
 
-Date: 2026-04-03  
+Date: 2026-04-07  
 Project: SmartBooking Web Project
 
 ## 1. Executive Summary
 
-SmartBooking presents a clean, modern visual direction with strong typography, consistent branding, and clear user flows across key pages. The homepage design system is the most mature part of the product, while secondary pages (especially Bootstrap-based pages) are visually simpler and less unified with the homepage style language.
+SmartBooking presents a clean, modern visual direction with strong typography, consistent branding, and clear user flows across the remaining core pages. The homepage design system remains the most mature part of the product, while utility-class pages now use a local framework-free CSS layer.
 
 Current implementation is front-end focused. Most booking, schedule, authentication, and dashboard data are static UI samples rather than backend-connected features.
 
@@ -50,19 +50,21 @@ Current implementation is front-end focused. Most booking, schedule, authenticat
 ## 3. Scope Reviewed
 
 - Home page: smartbooking.html
-- Supporting pages: about.html, book-appointment.html, contact.html, forgot-password.html
+- Booking page: book-appointment.html
 - Auth pages: login.html, register.html
 - Dashboard pages: my-appointments.html, admin-dashboard.html
-- Shared assets: assets/css/styles.css, assets/js/script.js
+- Entry point: index.html removed (redirect no longer used)
+- Welcome page: welcome.html removed
+- Shared assets: assets/css/styles.css, assets/css/style.css, assets/js/script.js
 
 ### 3.1 Tech Stack
 
 - Markup: HTML5
 - Styling: CSS3, CSS variables, Flexbox, Grid
-- UI framework/utilities: Bootstrap 5 (CDN)
+- UI utilities: local utility stylesheet (`assets/css/style.css`)
 - Typography: Google Fonts (Syne, DM Sans)
 - Frontend scripting: JavaScript (ES6+)
-- Frontend view layer: React 18 + ReactDOM 18 (CDN, dashboard pages)
+- Frontend view layer: Vanilla JavaScript DOM rendering (dashboard pages)
 - Project structure: Multi-page static website architecture
 - Backend: Not implemented in this version (prototype/demo uses static UI data)
 - Data persistence: Not implemented (no database integration in current codebase)
@@ -117,16 +119,16 @@ Gaps:
 - Calendar controls are decorative (no month/day behavior).
 - Slot and date content are static and not tied to booking state.
 
-### 4.2 Secondary Pages (Bootstrap-based)
+### 4.2 Secondary Pages (Utility-based)
 
 Strengths:
 
-- Fast, consistent, readable forms and cards.
-- Familiar navigation and interaction pattern.
+- Fast, consistent, readable forms and cards via local utility classes.
+- No external CSS framework dependency.
 
 Gaps:
 
-- Visual language differs from homepage design system (spacing, elevations, component character).
+- Visual language still differs from homepage design system (`styles.css` vs `style.css`).
 - Limited micro-interactions or stateful feedback.
 
 ### 4.3 Auth Pages (login/register)
@@ -239,3 +241,18 @@ This is acceptable for a design prototype, but should be explicitly communicated
 ## 13. Conclusion
 
 SmartBooking has a strong visual foundation and compelling presentation quality, especially on the homepage and auth experiences. The next maturity step is consistency and product realism: unify component styles across all pages and connect high-value UI areas (availability, booking, dashboards) to backend data and stateful interactions.
+
+## 14. Applied Changes Log (2026-04-07)
+
+Implemented changes in the current codebase:
+
+1. Removed framework dependencies from secondary/dashboard pages and replaced with local utility CSS + vanilla JavaScript.
+2. Converted dashboard rendering from React-style implementation to basic JavaScript DOM template rendering.
+3. Replaced external Bootstrap CDN usage with local `assets/css/style.css` and existing `assets/js/script.js` utilities.
+4. Added basic navbar collapse behavior in JavaScript to support mobile toggle without framework JS.
+5. Renamed utility stylesheet from `basic-ui.css` to `style.css` and updated references.
+6. Removed non-core pages: `about.html`, `contact.html`, `forgot-password.html`, `privacy-policy.html`, `terms-of-use.html`, `welcome.html`, and `index.html`.
+7. Updated all internal links/navigation after page removals to avoid broken routes.
+8. Removed all visible "Appointment System v1.0" labels from pages where they appeared.
+9. Adjusted navbar link alignment so primary nav links and login action are right-aligned on utility-based pages.
+10. Added `.gitignore` entries for report artifacts: `DESIGN_REPORT.md` and `SmartBooking_Design_Report.docx`.

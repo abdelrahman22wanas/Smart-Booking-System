@@ -4,33 +4,30 @@ SmartBooking is a multi-page appointment booking website with user and admin flo
 
 ## Website Structure (Sitemap)
 
-- Welcome: `welcome.html`
 - Home: `smartbooking.html`
-- About Us: `about.html`
 - Login: `login.html`
 - Register: `register.html`
-- Forgot Password: `forgot-password.html`
 - Book Appointment: `book-appointment.html`
 - My Appointments (User Dashboard): `my-appointments.html`
 - Admin Dashboard: `admin-dashboard.html`
-- Contact Us: `contact.html`
 
 ## Development Technologies
 
 ### Frontend
+
 - HTML5
 - CSS3
 - JavaScript (ES6+)
-- React.js (for dashboard pages)
 
 ### Styling
-- Bootstrap 5
+
 - CSS Flexbox
 - CSS Grid
+- Shared local UI utilities in `assets/css/style.css`
 
 ### Interactivity
+
 - JavaScript (ES6+)
-- React.js
 
 ## Assets Structure
 
@@ -40,5 +37,5 @@ SmartBooking is a multi-page appointment booking website with user and admin flo
 ## Notes
 
 - `smartbooking.html` uses external CSS/JS from the `assets` folder.
-- Dashboard pages use React and ReactDOM via CDN.
-- Bootstrap 5 is used in secondary pages for layout and components.
+- Dashboard pages are implemented with basic JavaScript (no framework).
+- Secondary pages use local basic UI classes (no Bootstrap dependency).
