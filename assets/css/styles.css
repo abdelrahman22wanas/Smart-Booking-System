@@ -1,14 +1,14 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f5f3ee;
+  --bg: #eef4f9;
   --surface: #ffffff;
-  --ink: #131210;
-  --ink-muted: #6b6860;
-  --accent: #1a6b4a;
-  --accent-light: #e8f5ef;
-  --accent2: #f0a500;
-  --border: #e0ddd6;
+  --ink: #0f172a;
+  --ink-muted: #51627a;
+  --accent: #0891b2;
+  --accent-light: #e0f7ff;
+  --accent2: #f59e0b;
+  --border: #d7e1ea;
   --radius: 14px;
   --shadow: 0 4px 24px rgba(0,0,0,0.07);
 }
@@ -28,7 +28,7 @@ h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
 
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(245,243,238,0.88);
+  background: rgba(238,244,249,0.88);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   padding: 0 5%;
@@ -89,9 +89,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   padding: .8rem 1.8rem; border-radius: 99px;
   font-size: .95rem; font-weight: 600;
   text-decoration: none; transition: transform .18s, box-shadow .18s;
-  box-shadow: 0 4px 16px rgba(26,107,74,.25);
+  box-shadow: 0 4px 16px rgba(8,145,178,.25);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.32); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(8,145,178,.32); }
 .btn-outline {
   background: transparent; color: var(--ink);
   border: 1.5px solid var(--border);
@@ -133,11 +133,16 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .cal-day {
   font-size: .85rem; padding: 6px 2px; border-radius: 8px;
   cursor: pointer; transition: background .15s;
+  border: none;
+  background: transparent;
+  font-family: inherit;
 }
 .cal-day:hover { background: var(--accent-light); color: var(--accent); }
 .cal-day.today { background: var(--accent); color: #fff; font-weight: 700; }
+.cal-day.selected { background: var(--accent); color: #fff; font-weight: 700; }
 .cal-day.other { color: #ccc; }
 .cal-day.available { color: var(--accent); font-weight: 600; }
+.cal-day.selected.available { color: #fff; }
 
 .booking-section {
   background: var(--surface);
@@ -181,9 +186,36 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
   margin-top: 1.4rem;
   transition: transform .18s, box-shadow .18s;
-  box-shadow: 0 4px 16px rgba(26,107,74,.22);
+  box-shadow: 0 4px 16px rgba(8,145,178,.22);
 }
-.btn-check:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.3); }
+.btn-check:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(8,145,178,.3); }
+
+.healthcare-services-section { padding: 5rem 5%; background: var(--bg); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  gap: 2rem; margin-top: 2.5rem;
+}
+.service-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 2rem;
+  text-align: center; transition: transform .2s, box-shadow .2s;
+}
+.service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(8,145,178,.15); }
+.service-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.service-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: .3rem; color: var(--ink); }
+.service-specialty { font-size: .85rem; color: var(--accent); font-weight: 600; margin-bottom: .8rem; }
+.service-desc { font-size: .9rem; color: var(--ink-muted); margin-bottom: 1rem; line-height: 1.5; }
+.service-details { font-size: .8rem; color: var(--ink-muted); margin-bottom: 1.2rem; }
+.service-details span { font-weight: 600; color: var(--ink); }
+.service-book-btn {
+  display: inline-block;
+  background: var(--accent); color: #fff;
+  padding: .6rem 1.4rem; border-radius: 99px;
+  text-decoration: none; font-size: .9rem; font-weight: 600;
+  transition: transform .18s, box-shadow .18s;
+  box-shadow: 0 4px 12px rgba(8,145,178,.2);
+}
+.service-book-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(8,145,178,.3); }
 
 .how-section { padding: 5rem 5%; }
 .steps-grid {

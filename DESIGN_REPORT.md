@@ -83,13 +83,13 @@ Current implementation is front-end focused. Most booking, schedule, authenticat
 
 Core tokens identified from CSS custom properties:
 
-- Background: #f5f3ee
+- Background: #eef4f9
 - Surface: #ffffff
-- Primary text: #131210
-- Secondary text: #6b6860
-- Primary accent: #1a6b4a
-- Secondary accent: #f0a500
-- Border: #e0ddd6
+- Primary text: #0f172a
+- Secondary text: #51627a
+- Primary accent: #0891b2
+- Secondary accent: #f59e0b
+- Border: #d7e1ea
 
 Observations:
 
