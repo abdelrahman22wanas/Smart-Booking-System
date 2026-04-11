@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SmartBooking — Login</title>
+  <title>Medical SmartBooking — Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f5f3ee;
+      --bg: #eef4f9;
       --surface: #ffffff;
-      --ink: #131210;
-      --ink-muted: #6b6860;
-      --accent: #1a6b4a;
-      --accent-light: #e8f5ef;
-      --accent2: #f0a500;
-      --border: #e0ddd6;
+      --ink: #0f172a;
+      --ink-muted: #51627a;
+      --accent: #0891b2;
+      --accent-light: #e0f7ff;
+      --accent2: #f59e0b;
+      --border: #d7e1ea;
       --radius: 14px;
     }
     body {
@@ -42,7 +42,7 @@
       position: absolute;
       width: 500px; height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(26,107,74,0.35) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(8,145,178,0.35) 0%, transparent 70%);
       top: -100px; left: -100px;
       pointer-events: none;
     }
@@ -51,7 +51,7 @@
       position: absolute;
       width: 350px; height: 350px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(240,165,0,0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
       bottom: -80px; right: -80px;
       pointer-events: none;
     }
@@ -68,7 +68,7 @@
     }
     .panel-tag {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(26,107,74,0.25); color: #6ee9a8;
+      background: rgba(8,145,178,0.2); color: #67e8f9;
       padding: .3rem .9rem; border-radius: 99px;
       font-size: .78rem; font-weight: 600; letter-spacing: .05em;
       margin-bottom: 1.5rem;
@@ -127,7 +127,7 @@
     }
     .form-group input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(26,107,74,.1);
+      box-shadow: 0 0 0 3px rgba(8,145,178,.1);
     }
     .form-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -143,9 +143,9 @@
       border-radius: 99px; font-family: 'Syne', sans-serif;
       font-size: 1rem; font-weight: 700;
       transition: transform .18s, box-shadow .18s;
-      box-shadow: 0 4px 16px rgba(26,107,74,.25);
+      box-shadow: 0 4px 16px rgba(8,145,178,.25);
     }
-    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.3); }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(8,145,178,.3); }
     .divider {
       display: flex; align-items: center; gap: 1rem;
       margin: 1.5rem 0; color: var(--ink-muted); font-size: .82rem;
@@ -174,7 +174,7 @@
 <body>
 
 <div class="left-panel">
-  <a href="smartbooking.html" class="panel-logo">Smart<span>Booking</span></a>
+  <a href="smartbooking.html" class="panel-logo">Medical<span>SmartBooking</span></a>
   <div class="panel-content">
     <h2>Welcome<br/>Back to<br/><em>SmartBooking</em></h2>
     <p>Manage your appointments, view your schedule, and stay on top of every booking — all in one place.</p>
@@ -184,7 +184,7 @@
       <div class="panel-feature">Conflict-free scheduling</div>
     </div>
   </div>
-  <div class="panel-bottom">© 2026 SmartBooking · All rights reserved</div>
+  <div class="panel-bottom">© 2026 Medical SmartBooking · All rights reserved</div>
 </div>
 
 <div class="right-panel">
@@ -221,7 +221,7 @@
     </form>
 
     <div class="register-link">
-      New to SmartBooking? <a href="register.html">Create an account</a>
+      New to Medical SmartBooking? <a href="register.html">Create an account</a>
     </div>
   </div>
 </div>

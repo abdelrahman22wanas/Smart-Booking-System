@@ -1,6 +1,6 @@
-# SmartBooking Web Project
+# Medical SmartBooking Web Project
 
-SmartBooking is a multi-page appointment booking website with user and admin flows.
+Medical SmartBooking is a multi-page healthcare appointment booking website with user and admin flows.
 
 ## Website Structure (Sitemap)
 

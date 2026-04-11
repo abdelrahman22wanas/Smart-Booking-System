@@ -3,12 +3,13 @@
 }
 
 :root {
-  --bg: #f5f3ee;
+  --bg: #eef4f9;
   --surface: #ffffff;
-  --ink: #131210;
-  --ink-muted: #6b6860;
-  --accent: #1a6b4a;
-  --border: #e0ddd6;
+  --ink: #0f172a;
+  --ink-muted: #51627a;
+  --accent: #0891b2;
+  --accent-light: #e0f7ff;
+  --border: #d7e1ea;
   --success: #198754;
   --warning: #ffc107;
 }
@@ -129,7 +130,7 @@ body {
 }
 
 .btn-dark {
-  background: #131210;
+  background: var(--ink);
   color: #fff;
 }
 
@@ -469,7 +470,7 @@ small {
 }
 
 .alert-success {
-  background: #e8f5ef;
+  background: var(--accent-light);
   border-color: #b7e2cc;
   color: #125237;
 }

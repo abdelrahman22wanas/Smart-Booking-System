@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SmartBooking — Appointment System</title>
+  <title>Medical SmartBooking — Healthcare Appointment System</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="assets/css/styles.css"/>
 </head>
 <body>
 
 <nav>
-  <a href="smartbooking.html" class="logo">Smart<span>Booking</span></a>
+  <a href="smartbooking.html" class="logo">Medical <span>SmartBooking</span></a>
   <ul>
     <li><a href="smartbooking.html">Home</a></li>
     <li><a href="book-appointment.html">Book Appointment</a></li>
@@ -35,28 +35,16 @@
   <div class="hero-visual">
     <div class="calendar-card">
       <div class="cal-header">
-        <span class="cal-month">March 2026</span>
+        <span class="cal-month" id="calendarMonthLabel">March 2026</span>
         <div class="cal-nav">
-          <button>&#8249;</button>
-          <button>&#8250;</button>
+          <button type="button" id="calendarPrevBtn" aria-label="Previous month">&#8249;</button>
+          <button type="button" id="calendarNextBtn" aria-label="Next month">&#8250;</button>
         </div>
       </div>
-      <div class="cal-grid">
+      <div class="cal-grid" id="calendarGrid">
         <div class="cal-day-label">Su</div><div class="cal-day-label">Mo</div><div class="cal-day-label">Tu</div>
         <div class="cal-day-label">We</div><div class="cal-day-label">Th</div><div class="cal-day-label">Fr</div>
         <div class="cal-day-label">Sa</div>
-
-        <div class="cal-day other">23</div><div class="cal-day other">24</div><div class="cal-day other">25</div>
-        <div class="cal-day other">26</div><div class="cal-day other">27</div><div class="cal-day other">28</div><div class="cal-day">1</div>
-        <div class="cal-day">2</div><div class="cal-day available">3</div><div class="cal-day available">4</div>
-        <div class="cal-day available">5</div><div class="cal-day available">6</div><div class="cal-day today">7</div><div class="cal-day">8</div>
-        <div class="cal-day">9</div><div class="cal-day available">10</div><div class="cal-day available">11</div>
-        <div class="cal-day">12</div><div class="cal-day available">13</div><div class="cal-day">14</div><div class="cal-day">15</div>
-        <div class="cal-day available">16</div><div class="cal-day">17</div><div class="cal-day available">18</div>
-        <div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day available">21</div><div class="cal-day">22</div>
-        <div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div>
-        <div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div>
-        <div class="cal-day">30</div><div class="cal-day">31</div>
       </div>
     </div>
   </div>
@@ -64,16 +52,17 @@
 
 <section class="booking-section" id="booking">
   <div class="section-label">Quick Booking</div>
-  <h2 class="section-title">Reserve Your Slot</h2>
+  <h2 class="section-title">Reserve Your Healthcare Appointment</h2>
   <div class="booking-grid">
     <div class="booking-field">
       <label>SELECT SERVICE</label>
       <select id="quickService">
-        <option value="">Choose a service…</option>
-        <option>General Consultation</option>
-        <option>Follow-up Visit</option>
-        <option>Technical Support</option>
-        <option>Advisory Session</option>
+        <option value="">Choose a healthcare service…</option>
+        <option value="doctor">Doctor - General Physician</option>
+        <option value="dentist">Dentist - Dental Care</option>
+        <option value="therapist">Therapist - Mental Health</option>
+        <option value="cardiologist">Cardiologist - Specialist</option>
+        <option value="pediatrician">Pediatrician - Children Care</option>
       </select>
     </div>
     <div class="booking-field">
@@ -93,6 +82,53 @@
     </div>
   </div>
   <button id="quickCheckBtn" class="btn-check">Check Availability →</button>
+</section>
+
+<section class="healthcare-services-section" id="healthcare-services">
+  <div class="section-label">Healthcare Services</div>
+  <h2 class="section-title">Our Medical Specialties</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🏥</div>
+      <h3>Doctor</h3>
+      <p class="service-specialty">General Physician</p>
+      <p class="service-desc">General medical consultation and check-up</p>
+      <p class="service-details"><span>Duration:</span> 30 min | <span>Cost:</span> $50</p>
+      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🦷</div>
+      <h3>Dentist</h3>
+      <p class="service-specialty">Dental Care</p>
+      <p class="service-desc">Dental examination and cleaning</p>
+      <p class="service-details"><span>Duration:</span> 45 min | <span>Cost:</span> $75</p>
+      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🧠</div>
+      <h3>Therapist</h3>
+      <p class="service-specialty">Mental Health</p>
+      <p class="service-desc">Psychological counseling and therapy session</p>
+      <p class="service-details"><span>Duration:</span> 60 min | <span>Cost:</span> $100</p>
+      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">❤️</div>
+      <h3>Cardiologist</h3>
+      <p class="service-specialty">Specialist</p>
+      <p class="service-desc">Heart and cardiovascular health consultation</p>
+      <p class="service-details"><span>Duration:</span> 45 min | <span>Cost:</span> $100</p>
+      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👶</div>
+      <h3>Pediatrician</h3>
+      <p class="service-specialty">Children Care</p>
+      <p class="service-desc">Child health check-up and vaccination</p>
+      <p class="service-details"><span>Duration:</span> 30 min | <span>Cost:</span> $45</p>
+      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+    </div>
+  </div>
 </section>
 
 <section class="how-section" id="services">
@@ -176,10 +212,10 @@
 <footer id="contact">
   <div class="footer-top">
     <div>
-      <div class="footer-logo">SmartBooking</div>
-      <p class="footer-desc">Smart scheduling system with real-time availability and instant notifications for everyone.</p>
+      <div class="footer-logo">Medical SmartBooking</div>
+      <p class="footer-desc">Professional healthcare scheduling system with real-time availability and instant notifications.</p>
       <div class="footer-contact">
-        <span>📧 support@smartbooking.com</span>
+        <span>📧 support@medicalsmartbooking.com</span>
         <span>📞 +20 XXX XXX XXXX</span>
       </div>
       <div class="socials">
@@ -208,7 +244,7 @@
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 SmartBooking · All rights reserved</div>
+  <div class="footer-bottom">© 2026 Medical SmartBooking · All rights reserved</div>
 </footer>
 
 <script src="assets/js/script.js"></script>
