@@ -1,22 +1,84 @@
+/* ============================================================================
+   MEDICAL SMARTBOOKING - UTILITY STYLESHEET
+   ============================================================================
+   This stylesheet provides a utility-class framework for secondary pages:
+   - pages/auth/login.html
+   - pages/auth/register.html
+   - pages/appointments/book-appointment.html
+   - pages/dashboard/my-appointments.html
+   - pages/dashboard/admin-dashboard.html
+   
+   Contains: layout grid, responsive breakpoints, buttons, forms, spacing utilities.
+   ============================================================================ */
+
 * {
   box-sizing: border-box;
 }
 
 :root {
-  --bg: #eef4f9;
+  --bg: #edfdf9;
   --surface: #ffffff;
-  --ink: #0f172a;
-  --ink-muted: #51627a;
-  --accent: #0891b2;
-  --accent-light: #e0f7ff;
-  --border: #d7e1ea;
-  --success: #198754;
-  --warning: #ffc107;
+  --ink: #102a2a;
+  --ink-muted: #55706d;
+  --accent: #0f766e;
+  --accent-dark: #115e59;
+  --accent-light: #ccfbf1;
+  --secondary: #14b8a6;
+  --border: #cde8e1;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --nav-bg: rgba(237,253,249,0.9);
+  --surface-soft: #f8fafc;
+  --input-bg: #ffffff;
+  --input-focus: rgba(15,118,110,.14);
+  --input-hover-bg: #f8fffd;
+  --date-field-bg: linear-gradient(180deg, #ffffff 0%, #f8fffd 100%);
+  --table-head-bg: #f8fafc;
+  --badge-muted-bg: #64748b;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg: #071a19;
+  --surface: #0d2422;
+  --surface-soft: #12312e;
+  --ink: #ecfdf9;
+  --ink-muted: #9fc9c3;
+  --accent: #2dd4bf;
+  --accent-dark: #14b8a6;
+  --accent-light: #134e4a;
+  --secondary: #5eead4;
+  --border: #1f4b46;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #f87171;
+  --nav-bg: rgba(7,26,25,0.9);
+  --input-bg: #12312e;
+  --input-focus: rgba(45,212,191,.18);
+  --input-hover-bg: #173b37;
+  --date-field-bg: linear-gradient(180deg, #173b37 0%, #12312e 100%);
+  --table-head-bg: #12312e;
+  --badge-muted-bg: #475569;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   color: var(--ink);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .32s ease, transform .32s ease;
+}
+
+body.page-ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.page-leaving {
+  opacity: 0;
+  transform: translateY(6px);
 }
 
 .container {
@@ -25,21 +87,29 @@ body {
 }
 
 .bg-white {
-  background: #fff;
+  background: var(--nav-bg);
 }
 
 .border-bottom {
   border-bottom: 1px solid var(--border);
 }
 
+/* SECTION: Navigation Components
+   Responsive navbar with mobile toggle support.
+   Used in: auth pages, appointment pages, dashboard pages. */
 .navbar {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
 }
 
 .navbar .container {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  min-height: 68px;
 }
 
 .navbar-toggler {
@@ -48,7 +118,7 @@ body {
   height: 36px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--surface);
   cursor: pointer;
 }
 
@@ -57,7 +127,7 @@ body {
   width: 18px;
   height: 2px;
   margin: 0 auto;
-  background: var(--ink);
+  background: var(--accent);
   position: relative;
 }
 
@@ -68,7 +138,7 @@ body {
   left: 0;
   width: 18px;
   height: 2px;
-  background: var(--ink);
+  background: var(--accent);
 }
 
 .navbar-toggler-icon::before {
@@ -102,18 +172,48 @@ body {
   align-items: flex-start;
 }
 
+/* SECTION: Form Controls (Input, Select, Labels)
+   Used in: Login, Register, Book Appointment forms.
+   Provides consistent styling for form elements across pages. */
 .nav-link {
   display: inline-block;
   color: var(--ink-muted);
   text-decoration: none;
+  font-size: 0.92rem;
   font-weight: 500;
+  transition: color .2s;
 }
 
 .nav-link.active,
 .nav-link:hover {
-  color: var(--ink);
+  color: var(--accent);
 }
 
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, border-color .2s, color .2s, transform .18s;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* SECTION: Button Styles
+   Reusable button classes: .btn, .btn-dark, .btn-outline-secondary, .btn-sm
+   Used across all utility-styled pages for actions and navigation. */
 .btn {
   display: inline-block;
   border: 1px solid transparent;
@@ -125,26 +225,36 @@ body {
 }
 
 .btn-sm {
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 1.2rem;
   font-size: 0.88rem;
 }
 
 .btn-dark {
-  background: var(--ink);
+  background: var(--accent);
   color: #fff;
+  border-color: var(--accent);
+  border-radius: 99px;
+}
+
+.btn-dark:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
 }
 
 .btn-outline-secondary {
   color: var(--ink-muted);
   border-color: var(--border);
-  background: #fff;
+  background: var(--surface);
 }
 
 .btn-outline-secondary:hover {
   color: var(--ink);
-  border-color: #c9c4bc;
+  border-color: var(--accent);
 }
 
+/* SECTION: Responsive Grid System
+   CSS Grid and Flexbox utilities for responsive layout.
+   Supports mobile-first design with breakpoints at 768px (tablet) and 992px (desktop). */
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -218,7 +328,7 @@ body {
   }
 
   .gap-lg-2 {
-    gap: 0.5rem;
+    gap: 2rem;
   }
 
   .align-items-lg-center {
@@ -298,6 +408,9 @@ body {
   gap: 0.5rem;
 }
 
+/* SECTION: Spacing & Layout Utilities
+   Padding, margin, display, and alignment utilities.
+   Classes like: .p-4, .mb-3, .mt-2, .d-flex, .text-center, etc. */
 .d-flex {
   display: flex;
 }
@@ -322,6 +435,9 @@ body {
   color: var(--ink-muted);
 }
 
+/* SECTION: Typography Utilities
+   Font size classes (.h1 through .h5, .display-6, .lead, .fs-5)
+   and text styling (.fw-bold, .text-secondary). */
 .small,
 small {
   font-size: 0.875em;
@@ -348,7 +464,7 @@ small {
 }
 
 .bg-light {
-  background: #f8f9fa;
+  background: var(--surface-soft);
 }
 
 .display-6 {
@@ -380,6 +496,8 @@ small {
   font-size: 1.25rem;
 }
 
+/* SECTION: Form Styling
+   Label and form input utilities used in auth and booking pages. */
 .form-label {
   display: block;
   margin-bottom: 0.4rem;
@@ -389,17 +507,66 @@ small {
 .form-control,
 .form-select {
   width: 100%;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 0.6rem;
+  min-height: 44px;
+  padding: 0.72rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
   font: inherit;
-  background: #fff;
+  background: var(--input-bg);
+  color: var(--ink);
+  transition: background .2s, border-color .2s, box-shadow .2s;
+}
+
+.form-select {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  padding-right: 2.6rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 50%,
+    calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  appearance: none;
+}
+
+.form-control[type="date"] {
+  min-height: 52px;
+  padding-right: 1rem;
+  border-radius: 16px;
+  background: var(--date-field-bg);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+.form-control:hover,
+.form-select:hover {
+  background-color: var(--input-hover-bg);
+  border-color: var(--accent);
 }
 
 .form-control:focus,
 .form-select:focus {
-  outline: 2px solid rgba(26, 107, 74, 0.2);
+  outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--input-focus);
+}
+
+.form-control[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: .82;
+  padding: .34rem;
+  border-radius: 999px;
+  background-color: var(--accent-light);
+}
+
+.form-control[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 .table-responsive {
@@ -409,6 +576,11 @@ small {
 .table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.table th {
+  background: var(--table-head-bg);
+  color: var(--ink);
 }
 
 .table th,
@@ -433,7 +605,7 @@ small {
 
 .text-bg-secondary {
   color: #fff;
-  background: #6c757d;
+  background: var(--badge-muted-bg);
 }
 
 .text-bg-success {
@@ -442,7 +614,7 @@ small {
 }
 
 .text-bg-warning {
-  color: #222;
+  color: var(--ink);
   background: var(--warning);
 }
 
@@ -457,6 +629,7 @@ small {
 .list-group-item {
   padding: 0.8rem 1rem;
   border-bottom: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .list-group-item:last-child {
@@ -471,6 +644,6 @@ small {
 
 .alert-success {
   background: var(--accent-light);
-  border-color: #b7e2cc;
-  color: #125237;
+  border-color: var(--border);
+  color: var(--accent);
 }

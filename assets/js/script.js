@@ -2,7 +2,7 @@
 // MEDICAL SMARTBOOKING - MAIN APPLICATION SCRIPT
 // ============================================================================
 // This script handles all application logic: forms, data storage, and UI updates
-// Uses browser localStorage for data persistence (no backend)
+// Uses the Node.js API when served by server.js, with localStorage fallback for direct file preview.
 // ============================================================================
 
 // -------- STORAGE KEYS --------
@@ -10,6 +10,7 @@
 const USERS_KEY = 'sb_users';                    // Array of registered users
 const APPOINTMENTS_KEY = 'sb_appointments';      // Array of all appointments
 const CURRENT_USER_KEY = 'sb_current_user';      // Currently logged-in user session
+const THEME_KEY = 'sb_theme';                     // Light/dark UI preference
 
 // ============================================================================
 // SECTION 1: HEALTHCARE SERVICES DATABASE
@@ -66,11 +67,33 @@ function getServiceName(serviceId) {
   return HEALTHCARE_SERVICES[serviceId]?.name || serviceId;
 }
 
+function formatBookingDateLabel(date) {
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(date);
+}
+
+function formatBookingMonthLabel(date) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+}
+
 // ============================================================================
 // SECTION 2: PAGE INITIALIZATION
 // ============================================================================
 // Runs when page loads - sets up all event listeners and renders dynamic content
 document.addEventListener('DOMContentLoaded', () => {
+  // Page: all pages that include assets/js/script.js
+  // Purpose: Bootstraps only the features that are present on the current page.
+
+  setupThemeMode();            // Shared: Light/dark mode toggle
+  setupPageTransitions();      // Shared: Smooth fade between internal pages
+
   // Setup interactive elements
   setupHeroCalendar();         // Homepage: Interactive month/day calendar
   setupSlotButtons();           // Homepage: Click time slots
@@ -82,11 +105,70 @@ document.addEventListener('DOMContentLoaded', () => {
   setupRegisterForm();          // Register page form submission
   setupLoginForm();             // Login page form submission
   setupBookingForm();           // Book appointment form submission
+  setupBookingDatePicker();     // Booking page: custom CareFlow date picker
   
   // Render dynamic pages (only load if element exists)
   renderAppointmentsPage();     // My Appointments page
   renderAdminPage();            // Admin Dashboard page
 });
+
+function setupThemeMode() {
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  const toggles = document.querySelectorAll('.theme-toggle');
+
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    toggles.forEach((toggle) => {
+      toggle.textContent = theme === 'dark' ? '☀' : '☾';
+      toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      toggle.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+  }
+
+  applyTheme(initialTheme);
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+    });
+  });
+}
+
+function setupPageTransitions() {
+  requestAnimationFrame(() => {
+    document.body.classList.add('page-ready');
+  });
+
+  window.addEventListener('pageshow', () => {
+    document.body.classList.remove('page-leaving');
+    document.body.classList.add('page-ready');
+  });
+
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || link.target === '_blank' || link.hasAttribute('download')) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.defaultPrevented) return;
+
+    const destination = new URL(href, window.location.href);
+    const isSameSite = destination.origin === window.location.origin;
+    const isSamePageHash = destination.pathname === window.location.pathname && destination.hash;
+    if (!isSameSite || isSamePageHash) return;
+
+    event.preventDefault();
+    document.body.classList.add('page-leaving');
+
+    window.setTimeout(() => {
+      window.location.href = destination.href;
+    }, 220);
+  });
+}
 
 // ============================================================================
 // SECTION 3: LOCALSTORAGE HELPERS
@@ -143,6 +225,60 @@ function setCurrentUser(user) {
   writeStore(CURRENT_USER_KEY, user);  // Save current session user
 }
 
+function apiAvailable() {
+  return window.location.protocol === 'http:' || window.location.protocol === 'https:';
+}
+
+async function apiRequest(path, options = {}) {
+  if (!apiAvailable()) {
+    throw new Error('API is only available when running the Node.js server.');
+  }
+
+  const response = await fetch(path, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {})
+    },
+    ...options
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.message || 'Request failed.');
+  }
+  return data;
+}
+
+async function loadAppointments(email = '') {
+  if (!apiAvailable()) return getAppointments();
+
+  try {
+    const query = email ? `?email=${encodeURIComponent(email)}` : '';
+    const data = await apiRequest(`/api/appointments${query}`);
+    return data.appointments || [];
+  } catch (_error) {
+    return getAppointments();
+  }
+}
+
+async function createApiAppointment(appointment) {
+  const data = await apiRequest('/api/appointments', {
+    method: 'POST',
+    body: JSON.stringify(appointment)
+  });
+  return data.appointment;
+}
+
+async function updateApiAppointmentStatus(id, status) {
+  await apiRequest(`/api/appointments/${encodeURIComponent(id)}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status })
+  });
+}
+
+// Page: smartbooking.html
+// Targets: #calendarMonthLabel, #calendarPrevBtn, #calendarNextBtn, #calendarGrid, #quickDate
+// Purpose: Renders the homepage calendar, handles month navigation, and syncs selected date.
 function setupHeroCalendar() {
   const monthLabel = document.getElementById('calendarMonthLabel');
   const prevButton = document.getElementById('calendarPrevBtn');
@@ -177,8 +313,11 @@ function setupHeroCalendar() {
 
     const selectedISO = quickDateInput.value;
 
+    // Clear grid and reset display
     grid.innerHTML = '';
-
+    grid.style.display = 'none';
+    
+    // Rebuild day labels
     dayLabels.forEach((label) => {
       const labelNode = document.createElement('div');
       labelNode.className = 'cal-day-label';
@@ -186,6 +325,8 @@ function setupHeroCalendar() {
       grid.appendChild(labelNode);
     });
 
+    // Build calendar day buttons
+    const dayButtons = [];
     for (let index = 0; index < 42; index += 1) {
       const dayButton = document.createElement('button');
       dayButton.type = 'button';
@@ -253,6 +394,9 @@ function setupHeroCalendar() {
 
       grid.appendChild(dayButton);
     }
+
+    // Re-enable grid display for proper layout recalculation
+    grid.style.display = 'grid';
   }
 
   prevButton.addEventListener('click', () => {
@@ -277,6 +421,8 @@ function setupHeroCalendar() {
   quickDateInput.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
+// Page: smartbooking.html
+// Purpose: Converts JS Date objects into YYYY-MM-DD strings used by date inputs/storage.
 function toISODate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -284,6 +430,9 @@ function toISODate(date) {
   return `${year}-${month}-${day}`;
 }
 
+// Page: smartbooking.html
+// Targets: .slot buttons in the availability section
+// Purpose: Allows selecting/unselecting free time slots for quick booking intent.
 function setupSlotButtons() {
   const slotButtons = document.querySelectorAll('.slot');
 
@@ -297,6 +446,9 @@ function setupSlotButtons() {
   });
 }
 
+// Page: smartbooking.html
+// Targets: #availabilitySummary, #appointments .slot, #quickDate
+// Purpose: Marks booked/open slots for the selected day and updates availability summary text.
 function setupHomepageAvailability() {
   const summary = document.getElementById('availabilitySummary');
   const slotButtons = document.querySelectorAll('#appointments .slot');
@@ -312,8 +464,8 @@ function setupHomepageAvailability() {
     }).format(parsedDate);
   };
 
-  const renderSlotsForDate = (selectedDate) => {
-    const appointments = getAppointments();
+  const renderSlotsForDate = async (selectedDate) => {
+    const appointments = await loadAppointments();
     const bookedTimes = new Set(
       appointments
         .filter((item) => item.date === selectedDate && item.status !== 'Cancelled')
@@ -376,6 +528,9 @@ function setupHomepageAvailability() {
   });
 }
 
+// Page: pages/appointments/book-appointment.html, pages/dashboard/my-appointments.html, pages/dashboard/admin-dashboard.html
+// Targets: [data-bs-toggle="collapse"] and corresponding collapse container
+// Purpose: Provides mobile nav expand/collapse behavior for utility-based pages.
 function setupNavbarToggle() {
   const toggles = document.querySelectorAll('[data-bs-toggle="collapse"]');
 
@@ -392,11 +547,14 @@ function setupNavbarToggle() {
   });
 }
 
+// Page: smartbooking.html
+// Targets: #quickCheckBtn, #quickService, #quickDate, #quickTime
+// Purpose: Validates quick booking input, checks slot conflicts, stores temporary selection, and redirects.
 function setupQuickAvailability() {
   const button = document.getElementById('quickCheckBtn');
   if (!button) return;
 
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
     const service = document.getElementById('quickService');
     const date = document.getElementById('quickDate');
     const time = document.getElementById('quickTime');
@@ -407,7 +565,8 @@ function setupQuickAvailability() {
       return;
     }
 
-    const hasConflict = getAppointments().some((item) => {
+    const appointments = await loadAppointments();
+    const hasConflict = appointments.some((item) => {
       return item.date === date.value && item.time === time.value && item.status !== 'Cancelled';
     });
 
@@ -423,7 +582,165 @@ function setupQuickAvailability() {
       date: date.value,
       time: time.value
     }));
-    window.location.href = 'book-appointment.html';
+    window.location.href = '../../pages/appointments/book-appointment.html';
+  });
+}
+
+// Page: pages/appointments/book-appointment.html
+// Targets: [data-booking-date-picker], #bookingDate, .date-picker-trigger
+// Purpose: Renders a CareFlow-styled calendar popup and keeps the hidden date input synced.
+function setupBookingDatePicker() {
+  const wrapper = document.querySelector('[data-booking-date-picker]');
+  if (!wrapper) return;
+
+  const trigger = wrapper.querySelector('.date-picker-trigger');
+  const valueNode = wrapper.querySelector('[data-date-value]');
+  const input = wrapper.querySelector('#bookingDate');
+  const popover = wrapper.querySelector('.date-picker-popover');
+  const monthLabel = wrapper.querySelector('[data-month-label]');
+  const grid = wrapper.querySelector('[data-date-grid]');
+  const prevButton = wrapper.querySelector('[data-action="prev"]');
+  const nextButton = wrapper.querySelector('[data-action="next"]');
+
+  if (!trigger || !valueNode || !input || !popover || !monthLabel || !grid || !prevButton || !nextButton) return;
+
+  const today = new Date();
+  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  input.min = toISODate(todayStart);
+
+  const initialDate = input.value ? new Date(`${input.value}T00:00:00`) : todayStart;
+  if (!input.value) {
+    input.value = toISODate(todayStart);
+  }
+
+  let viewYear = initialDate.getFullYear();
+  let viewMonth = initialDate.getMonth();
+
+  function updateTriggerLabel() {
+    const selected = input.value ? new Date(`${input.value}T00:00:00`) : null;
+    valueNode.textContent = selected ? formatBookingDateLabel(selected) : 'Select a date';
+  }
+
+  function closePicker() {
+    popover.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function openPicker() {
+    popover.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  function renderPicker() {
+    monthLabel.textContent = formatBookingMonthLabel(new Date(viewYear, viewMonth, 1));
+    grid.innerHTML = '';
+
+    const firstWeekday = new Date(viewYear, viewMonth, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const daysInPreviousMonth = new Date(viewYear, viewMonth, 0).getDate();
+    const selectedISO = input.value;
+
+    for (let index = 0; index < 42; index += 1) {
+      let cellYear = viewYear;
+      let cellMonth = viewMonth;
+      let dayNumber = index - firstWeekday + 1;
+      let isOtherMonth = false;
+
+      if (index < firstWeekday) {
+        cellMonth -= 1;
+        if (cellMonth < 0) {
+          cellMonth = 11;
+          cellYear -= 1;
+        }
+        dayNumber = daysInPreviousMonth - firstWeekday + index + 1;
+        isOtherMonth = true;
+      } else if (dayNumber > daysInMonth) {
+        dayNumber -= daysInMonth;
+        cellMonth += 1;
+        if (cellMonth > 11) {
+          cellMonth = 0;
+          cellYear += 1;
+        }
+        isOtherMonth = true;
+      }
+
+      const cellDate = new Date(cellYear, cellMonth, dayNumber);
+      const isoDate = toISODate(cellDate);
+      const isPast = cellDate < todayStart;
+      const isToday = isoDate === toISODate(todayStart);
+      const isSelected = isoDate === selectedISO;
+
+      const dayButton = document.createElement('button');
+      dayButton.type = 'button';
+      dayButton.className = 'date-picker-day';
+      dayButton.textContent = String(dayNumber);
+      dayButton.dataset.date = isoDate;
+
+      if (isOtherMonth) dayButton.classList.add('other-month');
+      if (isToday) dayButton.classList.add('today');
+      if (isSelected) dayButton.classList.add('selected');
+      if (isPast) dayButton.disabled = true;
+
+      dayButton.addEventListener('click', () => {
+        input.value = isoDate;
+        updateTriggerLabel();
+        renderPicker();
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+        closePicker();
+      });
+
+      grid.appendChild(dayButton);
+    }
+  }
+
+  updateTriggerLabel();
+  renderPicker();
+
+  trigger.addEventListener('click', () => {
+    if (popover.hidden) {
+      openPicker();
+    } else {
+      closePicker();
+    }
+  });
+
+  prevButton.addEventListener('click', () => {
+    viewMonth -= 1;
+    if (viewMonth < 0) {
+      viewMonth = 11;
+      viewYear -= 1;
+    }
+    renderPicker();
+  });
+
+  nextButton.addEventListener('click', () => {
+    viewMonth += 1;
+    if (viewMonth > 11) {
+      viewMonth = 0;
+      viewYear += 1;
+    }
+    renderPicker();
+  });
+
+  input.addEventListener('change', () => {
+    if (!input.value) return;
+    const selected = new Date(`${input.value}T00:00:00`);
+    viewYear = selected.getFullYear();
+    viewMonth = selected.getMonth();
+    updateTriggerLabel();
+    renderPicker();
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!wrapper.contains(event.target)) {
+      closePicker();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closePicker();
+    }
   });
 }
 
@@ -438,12 +755,15 @@ function setupQuickAvailability() {
  * Flow: User fills form → Click submit → Save user → Auto-login → Redirect to booking
  */
 function setupRegisterForm() {
+  // Page: pages/auth/register.html
+  // Targets: #registerForm and register input fields/message node
+  // Purpose: Validates registration data, prevents duplicate emails, saves user, and auto-logs in.
   const form = document.getElementById('registerForm');
   if (!form) return;  // Exit if form doesn't exist on this page
 
   const message = document.getElementById('registerMessage');  // Displays feedback
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     // Collect form values
@@ -479,40 +799,53 @@ function setupRegisterForm() {
       return;
     }
 
-    // VALIDATION: Email uniqueness - check if this email already exists
-    const users = getUsers();
-    const exists = users.some((user) => user.email === email);
-    if (exists) {
-      setMessage(message, 'An account with this email already exists.', false);
+    let sessionUser;
+
+    try {
+      if (apiAvailable()) {
+        const data = await apiRequest('/api/register', {
+          method: 'POST',
+          body: JSON.stringify({ firstName, lastName, email, phone, password })
+        });
+        sessionUser = data.user;
+      } else {
+        const users = getUsers();
+        const exists = users.some((user) => user.email === email);
+        if (exists) {
+          setMessage(message, 'An account with this email already exists.', false);
+          return;
+        }
+
+        const user = {
+          id: `U-${Date.now()}`,
+          firstName,
+          lastName,
+          email,
+          phone,
+          password
+        };
+
+        users.push(user);
+        saveUsers(users);
+        sessionUser = {
+          id: user.id,
+          name: `${firstName} ${lastName}`,
+          email: user.email
+        };
+      }
+    } catch (error) {
+      setMessage(message, error.message, false);
       return;
     }
 
-    // CREATE USER OBJECT and save to localStorage
-    const user = {
-      id: `U-${Date.now()}`,  // Unique ID based on timestamp
-      firstName,
-      lastName,
-      email,
-      phone,
-      password  // NOTE: In production, password should be hashed
-    };
-
-    users.push(user);
-    saveUsers(users);
-
-    // AUTO-LOGIN: Set current user session
-    setCurrentUser({ 
-      id: user.id, 
-      name: `${firstName} ${lastName}`, 
-      email: user.email 
-    });
+    setCurrentUser(sessionUser);
 
     // Show success message and redirect
     setMessage(message, 'Account created successfully. Redirecting to booking page...', true);
     form.reset();
 
     setTimeout(() => {
-      window.location.href = 'book-appointment.html';
+      window.location.href = '../../pages/appointments/book-appointment.html';
     }, 900);
   });
 }
@@ -523,12 +856,15 @@ function setupRegisterForm() {
  * Flow: User enters email/password → Click submit → Validate → Create session → Redirect
  */
 function setupLoginForm() {
+  // Page: pages/auth/login.html
+  // Targets: #loginForm, #loginEmail, #loginPassword, #loginMessage
+  // Purpose: Authenticates user against local storage and creates session state.
   const form = document.getElementById('loginForm');
   if (!form) return;
 
   const message = document.getElementById('loginMessage');
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     // Collect form values
@@ -541,27 +877,42 @@ function setupLoginForm() {
       return;
     }
 
-    // LOOKUP: Find user with matching email AND password
-    const users = getUsers();
-    const user = users.find((item) => item.email === email && item.password === password);
-    
-    if (!user) {
-      setMessage(message, 'Invalid email or password.', false);
+    let sessionUser;
+
+    try {
+      if (apiAvailable()) {
+        const data = await apiRequest('/api/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+        sessionUser = data.user;
+      } else {
+        const users = getUsers();
+        const user = users.find((item) => item.email === email && item.password === password);
+
+        if (!user) {
+          setMessage(message, 'Invalid email or password.', false);
+          return;
+        }
+
+        sessionUser = {
+          id: user.id,
+          name: `${user.firstName} ${user.lastName}`,
+          email: user.email
+        };
+      }
+    } catch (error) {
+      setMessage(message, error.message, false);
       return;
     }
 
-    // CREATE SESSION: Set current user
-    setCurrentUser({ 
-      id: user.id, 
-      name: `${user.firstName} ${user.lastName}`, 
-      email: user.email 
-    });
+    setCurrentUser(sessionUser);
 
     // Show success and redirect to dashboard
     setMessage(message, 'Login successful. Redirecting...', true);
 
     setTimeout(() => {
-      window.location.href = 'my-appointments.html';
+      window.location.href = '../../pages/dashboard/my-appointments.html';
     }, 700);
   });
 }
@@ -573,6 +924,9 @@ function setupLoginForm() {
  * Flow: User selects/enters details → Submit → Validate slot free → Save appointment → Redirect
  */
 function setupBookingForm() {
+  // Page: pages/appointments/book-appointment.html
+  // Targets: #bookingForm and all booking inputs/message node
+  // Purpose: Prefills user/quick-booking data, validates slot, creates appointment, then redirects.
   const form = document.getElementById('bookingForm');
   if (!form) return;
 
@@ -605,7 +959,7 @@ function setupBookingForm() {
     }
   }
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     // Collect all form values
@@ -622,30 +976,44 @@ function setupBookingForm() {
       return;
     }
 
-    // VALIDATION: Check if this time slot is already booked by someone else
-    const appointments = getAppointments();
-    const conflict = appointments.some((item) => {
-      return item.date === date && item.time === time && item.status !== 'Cancelled';
-    });
-    if (conflict) {
-      setMessage(message, 'This slot is already booked. Please choose another time.', false);
+    try {
+      if (apiAvailable()) {
+        await createApiAppointment({
+          userName: name,
+          userEmail: email,
+          serviceId,
+          date,
+          time,
+          notes
+        });
+      } else {
+        const appointments = getAppointments();
+        const conflict = appointments.some((item) => {
+          return item.date === date && item.time === time && item.status !== 'Cancelled';
+        });
+        if (conflict) {
+          setMessage(message, 'This slot is already booked. Please choose another time.', false);
+          return;
+        }
+
+        const serviceName = getServiceName(serviceId);
+        appointments.push({
+          id: `A-${Date.now().toString().slice(-6)}`,
+          userName: name,
+          userEmail: email,
+          service: serviceName,
+          serviceId: serviceId,
+          date,
+          time,
+          notes,
+          status: 'Confirmed'
+        });
+        saveAppointments(appointments);
+      }
+    } catch (error) {
+      setMessage(message, error.message, false);
       return;
     }
-
-    // CREATE APPOINTMENT: Convert service ID to display name, build record
-    const serviceName = getServiceName(serviceId);
-    appointments.push({
-      id: `A-${Date.now().toString().slice(-6)}`,  // Auto-generated ID from timestamp
-      userName: name,
-      userEmail: email,
-      service: serviceName,                         // Display name (e.g., "Doctor")
-      serviceId: serviceId,                         // ID for lookups (e.g., "doctor")
-      date,
-      time,
-      notes,
-      status: 'Confirmed'                           // Initial status
-    });
-    saveAppointments(appointments);
 
     // Success message
     setMessage(message, 'Booking confirmed successfully! Check your email for confirmation.', true);
@@ -657,9 +1025,14 @@ function setupBookingForm() {
       if (emailInput) emailInput.value = currentUser.email;
     }
 
+    if (dateInput) {
+      dateInput.value = toISODate(new Date());
+      dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
     // REDIRECT: Go to appointments dashboard
     setTimeout(() => {
-      window.location.href = 'my-appointments.html';
+      window.location.href = '../../pages/dashboard/my-appointments.html';
     }, 1500);
   });
 }
@@ -676,19 +1049,22 @@ function setupBookingForm() {
  * Sets up click handlers for cancel buttons
  */
 function renderAppointmentsPage() {
+  // Page: pages/dashboard/my-appointments.html
+  // Targets: #appointments-root
+  // Purpose: Initializes user dashboard event handlers and renders appointment list.
   const root = document.getElementById('appointments-root');
   if (!root) return;
 
   // Click handler: When user clicks "Cancel" button on an appointment
-  root.addEventListener('click', (event) => {
+  root.addEventListener('click', async (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
 
     if (target.dataset.action === 'cancel') {
       const id = target.dataset.id;
       if (!id) return;
-      updateAppointmentStatus(id, 'Cancelled');  // Update the status
-      drawAppointments(root);                    // Redraw table
+      await updateAppointmentStatus(id, 'Cancelled');  // Update the status
+      drawAppointments(root);                         // Redraw table
     }
   });
 
@@ -701,9 +1077,12 @@ function renderAppointmentsPage() {
  * Filters appointments by logged-in user's email
  * Shows empty state if no appointments
  */
-function drawAppointments(root) {
+async function drawAppointments(root) {
+  // Page: pages/dashboard/my-appointments.html
+  // Targets: injected table/buttons inside #appointments-root
+  // Purpose: Builds current user's appointment table and supports cancellation UI states.
   const currentUser = getCurrentUser();
-  const all = getAppointments();
+  const all = await loadAppointments(currentUser?.email || '');
   
   // FILTER: Show only appointments for logged-in user
   const appointments = currentUser
@@ -715,7 +1094,7 @@ function drawAppointments(root) {
     root.innerHTML = [
       '<h1 class="h3 fw-bold mb-3">My Appointments</h1>',
       '<p class="text-secondary mb-4">No appointments found yet.</p>',
-      '<a class="btn btn-outline-secondary mt-2" href="book-appointment.html">Book New Appointment</a>'
+      '<a class="btn btn-outline-secondary mt-2" href="../../pages/appointments/book-appointment.html">Book New Appointment</a>'
     ].join('');
     return;
   }
@@ -744,7 +1123,7 @@ function drawAppointments(root) {
     `<tbody>${rowsHtml}</tbody>`,
     '</table>',
     '</div>',
-    '<a class="btn btn-outline-secondary mt-2" href="book-appointment.html">Book New Appointment</a>'
+    '<a class="btn btn-outline-secondary mt-2" href="../../pages/appointments/book-appointment.html">Book New Appointment</a>'
   ].join('');
 }
 
@@ -760,11 +1139,14 @@ function drawAppointments(root) {
  * Sets up click handlers for admin actions (complete, cancel)
  */
 function renderAdminPage() {
+  // Page: pages/dashboard/admin-dashboard.html
+  // Targets: #admin-root
+  // Purpose: Initializes admin action handlers and renders all bookings view.
   const root = document.getElementById('admin-root');
   if (!root) return;
 
   // Click handler: When admin clicks action buttons
-  root.addEventListener('click', (event) => {
+  root.addEventListener('click', async (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
 
@@ -773,14 +1155,14 @@ function renderAdminPage() {
     if (!action || !id) return;
 
     if (action === 'complete') {
-      updateAppointmentStatus(id, 'Completed');  // Mark as done
-      drawAdmin(root);                           // Refresh display
+      await updateAppointmentStatus(id, 'Completed');  // Mark as done
+      drawAdmin(root);                                // Refresh display
       return;
     }
 
     if (action === 'cancel') {
-      updateAppointmentStatus(id, 'Cancelled');  // Cancel appointment
-      drawAdmin(root);                           // Refresh display
+      await updateAppointmentStatus(id, 'Cancelled');  // Cancel appointment
+      drawAdmin(root);                                // Refresh display
     }
   });
 
@@ -792,8 +1174,11 @@ function renderAdminPage() {
  * Build and display admin dashboard
  * Shows summary stats and full appointments table
  */
-function drawAdmin(root) {
-  const appointments = getAppointments();
+async function drawAdmin(root) {
+  // Page: pages/dashboard/admin-dashboard.html
+  // Targets: injected stats cards/table inside #admin-root
+  // Purpose: Displays booking KPIs and admin controls (complete/cancel) for all appointments.
+  const appointments = await loadAppointments();
   const today = new Date().toISOString().slice(0, 10);  // Today's date
 
   // STATS: Calculate key numbers
@@ -873,7 +1258,14 @@ function drawAdmin(root) {
  * @param {string} id - Appointment ID
  * @param {string} status - New status (Confirmed, Completed, Cancelled)
  */
-function updateAppointmentStatus(id, status) {
+async function updateAppointmentStatus(id, status) {
+  // Page: shared utility used by user/admin dashboards
+  // Purpose: Updates one appointment status in storage while keeping all others unchanged.
+  if (apiAvailable()) {
+    await updateApiAppointmentStatus(id, status);
+    return;
+  }
+
   const appointments = getAppointments();
   const updated = appointments.map((item) => {
     if (item.id !== id) return item;
@@ -890,6 +1282,8 @@ function updateAppointmentStatus(id, status) {
  * @param {boolean} isSuccess - True for success (green), false for error (red)
  */
 function setMessage(node, text, isSuccess) {
+  // Page: shared utility used in auth and booking forms
+  // Purpose: Writes user feedback message text and applies success/error color styling.
   if (!node) return;
   node.textContent = text;
   node.style.color = isSuccess ? 'var(--accent)' : '#b42318';  // Accent or Red

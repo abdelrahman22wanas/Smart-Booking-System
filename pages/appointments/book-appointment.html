@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareFlow — Book Appointment</title>
+  <!-- Google Fonts for typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Utility stylesheet for form and layout styles -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); }
+    h1, h2, h3 { font-family: 'Syne', sans-serif; }
+    .brand { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); text-decoration: none; }
+    .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+    .btn-accent { background: var(--accent); color: #fff; border: none; }
+    .btn-accent:hover { background: var(--accent-dark); color: #fff; }
+  </style>
+</head>
+<body>
+  <!-- PAGE: Book Appointment (pages/appointments/book-appointment.html)
+       Form for users to book a healthcare appointment.
+       Collects: Name, Email, Service, Date, Time, and optional Notes.
+       Auto-fills if user is logged in or coming from quick-book on homepage. -->
+  
+  <nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container py-2">
+      <a class="brand" href="../../smartbooking.html">CareFlow</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../../smartbooking.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="book-appointment.html">Book</a></li>
+          <li class="nav-item"><a class="nav-link" href="../dashboard/my-appointments.html">My Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="../dashboard/admin-dashboard.html">Admin</a></li>
+          <li class="nav-item"><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button></li>
+          <li class="nav-item"><a class="btn btn-dark btn-sm ms-lg-2" href="../auth/login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div class="form-card p-4 p-md-5 mx-auto" style="max-width: 900px;">
+      <h1 class="h2 fw-bold mb-4">Book Appointment</h1>
+      <form id="bookingForm" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="bookingName">Full Name</label>
+          <input id="bookingName" class="form-control" type="text" placeholder="Enter your name" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="bookingEmail">Email</label>
+          <input id="bookingEmail" class="form-control" type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="bookingService">Healthcare Service</label>
+          <select id="bookingService" class="form-select" required>
+            <option value="" selected disabled>Choose a healthcare service</option>
+            <option value="doctor">Doctor - General Physician</option>
+            <option value="dentist">Dentist - Dental Care</option>
+            <option value="therapist">Therapist - Mental Health</option>
+            <option value="cardiologist">Cardiologist - Specialist</option>
+            <option value="pediatrician">Pediatrician - Children Care</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" id="bookingDateLabel">Date</label>
+          <div class="date-picker" data-booking-date-picker>
+            <button
+              id="bookingDateDisplay"
+              class="date-picker-trigger"
+              type="button"
+              aria-labelledby="bookingDateLabel"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+            >
+              <span class="date-picker-value" data-date-value>Select a date</span>
+              <span class="date-picker-icon" aria-hidden="true"></span>
+            </button>
+            <input id="bookingDate" class="date-picker-input" type="date" required tabindex="-1" aria-hidden="true" />
+            <div class="date-picker-popover" hidden>
+              <div class="date-picker-panel" role="dialog" aria-label="Select appointment date">
+                <div class="date-picker-head">
+                  <button type="button" class="date-picker-nav" data-action="prev" aria-label="Previous month">‹</button>
+                  <div class="date-picker-title" data-month-label></div>
+                  <button type="button" class="date-picker-nav" data-action="next" aria-label="Next month">›</button>
+                </div>
+                <div class="date-picker-weekdays" aria-hidden="true">
+                  <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                </div>
+                <div class="date-picker-grid" data-date-grid></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label" for="bookingTime">Time</label>
+          <select id="bookingTime" class="form-select" required>
+            <option value="" selected disabled>Choose time</option>
+            <option>10:00 AM</option>
+            <option>11:00 AM</option>
+            <option>01:00 PM</option>
+            <option>03:00 PM</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="bookingNotes">Notes</label>
+          <textarea id="bookingNotes" class="form-control" rows="4" placeholder="Add any additional details..."></textarea>
+        </div>
+        <div class="col-12 d-flex gap-2 flex-wrap">
+          <button class="btn btn-accent px-4" type="submit">Confirm Booking</button>
+          <a class="btn btn-outline-secondary" href="../dashboard/my-appointments.html">Go to My Appointments</a>
+        </div>
+        <div class="col-12">
+          <p id="bookingMessage" class="small"></p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+</body>
+</html>

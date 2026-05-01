@@ -3,32 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medical SmartBooking — Healthcare Appointment System</title>
+  <title>CareFlow — Medical SmartBooking</title>
+  <!-- Google Fonts: Syne (headings) and DM Sans (body) -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <!-- Main homepage styles -->
   <link rel="stylesheet" href="assets/css/styles.css"/>
 </head>
 <body>
 
+<!-- ============================================================================
+     NAVIGATION BAR
+     Sticky header with branding, navigation links, and login button.
+     ============================================================================ -->
 <nav>
-  <a href="smartbooking.html" class="logo">Medical <span>SmartBooking</span></a>
+  <a href="smartbooking.html" class="logo">Care<span>Flow</span></a>
   <ul>
     <li><a href="smartbooking.html">Home</a></li>
-    <li><a href="book-appointment.html">Book Appointment</a></li>
-    <li><a href="my-appointments.html">My Appointments</a></li>
-    <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
-    <li><a href="register.html">Register</a></li>
-    <li><a href="login.html" class="btn-login">Login</a></li>
+    <li><a href="pages/appointments/book-appointment.html">Book Appointment</a></li>
+    <li><a href="pages/dashboard/my-appointments.html">My Appointments</a></li>
+    <li><a href="pages/dashboard/admin-dashboard.html">Admin Dashboard</a></li>
+    <li><a href="pages/auth/register.html">Register</a></li>
+    <li><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button></li>
+    <li><a href="pages/auth/login.html" class="btn-login">Login</a></li>
   </ul>
 </nav>
 
+<!-- ============================================================================
+     HERO SECTION
+     Main headline: "Book Your Appointment in Seconds"
+     Features tagline, CTA buttons, and interactive calendar visual.
+     ============================================================================ -->
 <section class="hero">
   <div class="hero-text">
     <h1 class="hero-title">Book Your<br/><em>Appointment</em><br/>in Seconds</h1>
-    <p class="hero-sub">Smart scheduling system with real-time availability and instant notifications.</p>
+    <p class="hero-sub">Medical SmartBooking for real-time availability, instant notifications, and conflict-free healthcare scheduling.</p>
     <div class="hero-btns">
       <a href="#booking" class="btn-primary">Book Appointment</a>
       <a href="#services" class="btn-outline">View Services</a>
-      <a href="register.html" class="btn-outline">Create Account</a>
+      <a href="pages/auth/register.html" class="btn-outline">Create Account</a>
     </div>
   </div>
 
@@ -50,6 +62,11 @@
   </div>
 </section>
 
+<!-- ============================================================================
+     QUICK BOOKING SECTION
+     Service, date, and time selection with "Check Availability" button.
+     Allows quick booking flow from homepage.
+     ============================================================================ -->
 <section class="booking-section" id="booking">
   <div class="section-label">Quick Booking</div>
   <h2 class="section-title">Reserve Your Healthcare Appointment</h2>
@@ -84,6 +101,11 @@
   <button id="quickCheckBtn" class="btn-check">Check Availability →</button>
 </section>
 
+<!-- ============================================================================
+     HEALTHCARE SERVICES SECTION
+     Grid of 5 service cards: Doctor, Dentist, Therapist, Cardiologist, Pediatrician.
+     Each shows icon, description, duration, cost, and "Book Now" button.
+     ============================================================================ -->
 <section class="healthcare-services-section" id="healthcare-services">
   <div class="section-label">Healthcare Services</div>
   <h2 class="section-title">Our Medical Specialties</h2>
@@ -94,7 +116,7 @@
       <p class="service-specialty">General Physician</p>
       <p class="service-desc">General medical consultation and check-up</p>
       <p class="service-details"><span>Duration:</span> 30 min | <span>Cost:</span> $50</p>
-      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+      <a href="pages/appointments/book-appointment.html" class="service-book-btn">Book Now</a>
     </div>
     <div class="service-card">
       <div class="service-icon">🦷</div>
@@ -102,7 +124,7 @@
       <p class="service-specialty">Dental Care</p>
       <p class="service-desc">Dental examination and cleaning</p>
       <p class="service-details"><span>Duration:</span> 45 min | <span>Cost:</span> $75</p>
-      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+      <a href="pages/appointments/book-appointment.html" class="service-book-btn">Book Now</a>
     </div>
     <div class="service-card">
       <div class="service-icon">🧠</div>
@@ -110,7 +132,7 @@
       <p class="service-specialty">Mental Health</p>
       <p class="service-desc">Psychological counseling and therapy session</p>
       <p class="service-details"><span>Duration:</span> 60 min | <span>Cost:</span> $100</p>
-      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+      <a href="pages/appointments/book-appointment.html" class="service-book-btn">Book Now</a>
     </div>
     <div class="service-card">
       <div class="service-icon">❤️</div>
@@ -118,7 +140,7 @@
       <p class="service-specialty">Specialist</p>
       <p class="service-desc">Heart and cardiovascular health consultation</p>
       <p class="service-details"><span>Duration:</span> 45 min | <span>Cost:</span> $100</p>
-      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+      <a href="pages/appointments/book-appointment.html" class="service-book-btn">Book Now</a>
     </div>
     <div class="service-card">
       <div class="service-icon">👶</div>
@@ -126,11 +148,15 @@
       <p class="service-specialty">Children Care</p>
       <p class="service-desc">Child health check-up and vaccination</p>
       <p class="service-details"><span>Duration:</span> 30 min | <span>Cost:</span> $45</p>
-      <a href="book-appointment.html" class="service-book-btn">Book Now</a>
+      <a href="pages/appointments/book-appointment.html" class="service-book-btn">Book Now</a>
     </div>
   </div>
 </section>
 
+<!-- ============================================================================
+     HOW IT WORKS / PROCESS STEPS
+     4-step process: Create Account → Choose Service → Select Time → Confirm & Email
+     ============================================================================ -->
 <section class="how-section" id="services">
   <div class="section-label">Process</div>
   <h2 class="section-title">How It Works</h2>
@@ -162,6 +188,11 @@
   </div>
 </section>
 
+<!-- ============================================================================
+     FEATURES / BENEFITS SECTION
+     Dark section highlighting 6 key product benefits with checkmarks.
+     Builds credibility and differentiators.
+     ============================================================================ -->
 <section class="features-section">
   <div class="section-label">Features</div>
   <h2 class="section-title">Everything You Need</h2>
@@ -175,13 +206,18 @@
   </div>
 </section>
 
+<!-- ============================================================================
+     AVAILABLE TIME SLOTS SECTION
+     Displays today's available appointment slots in a button row.
+     Shows real-time availability based on bookings. Slots marked as "Booked" are unavailable.
+     ============================================================================ -->
 <section class="slots-section" id="appointments">
   <div class="slots-header">
     <div>
       <div class="section-label">Availability</div>
       <h2 class="section-title">Today's Available Appointments<br/><small class="section-subtitle">March 07, 2026</small></h2>
     </div>
-    <a href="book-appointment.html">Book a Slot →</a>
+    <a href="pages/appointments/book-appointment.html">Book a Slot →</a>
   </div>
   <p class="slots-summary" id="availabilitySummary">Loading available slots...</p>
   <div class="slots-row">
@@ -196,6 +232,11 @@
   </div>
 </section>
 
+<!-- ============================================================================
+     TESTIMONIALS SECTION
+     User review with 5-star rating and quote.
+     Social proof to build trust and encourage conversions.
+     ============================================================================ -->
 <section class="testimonial-section">
   <div class="testimonial-card">
     <div class="stars">★ ★ ★ ★ ★</div>
@@ -204,16 +245,25 @@
   </div>
 </section>
 
+<!-- ============================================================================
+     CALL-TO-ACTION SECTION
+     Large banner with headline and primary CTA button.
+     Final conversion push before footer to encourage booking.
+     ============================================================================ -->
 <section class="cta-section">
   <h2>Ready to schedule your<br/>appointment?</h2>
-  <a href="book-appointment.html" class="btn-primary cta-btn">Book Now →</a>
+  <a href="pages/appointments/book-appointment.html" class="btn-primary cta-btn">Book Now →</a>
 </section>
 
+<!-- ============================================================================
+     FOOTER
+     Company branding, contact info, quick navigation links, legal, and social media.
+     ============================================================================ -->
 <footer id="contact">
   <div class="footer-top">
     <div>
-      <div class="footer-logo">Medical SmartBooking</div>
-      <p class="footer-desc">Professional healthcare scheduling system with real-time availability and instant notifications.</p>
+      <div class="footer-logo">CareFlow</div>
+      <p class="footer-desc">Medical SmartBooking system with real-time availability and instant notifications.</p>
       <div class="footer-contact">
         <span>📧 support@medicalsmartbooking.com</span>
         <span>📞 +20 XXX XXX XXXX</span>
@@ -228,11 +278,11 @@
       <h4>Quick Links</h4>
       <ul>
         <li><a href="smartbooking.html">Home</a></li>
-        <li><a href="book-appointment.html">Book Appointment</a></li>
-        <li><a href="my-appointments.html">My Appointments</a></li>
-        <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="register.html">Register</a></li>
+        <li><a href="pages/appointments/book-appointment.html">Book Appointment</a></li>
+        <li><a href="pages/dashboard/my-appointments.html">My Appointments</a></li>
+        <li><a href="pages/dashboard/admin-dashboard.html">Admin Dashboard</a></li>
+        <li><a href="pages/auth/login.html">Login</a></li>
+        <li><a href="pages/auth/register.html">Register</a></li>
       </ul>
     </div>
     <div>
@@ -244,9 +294,10 @@
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">© 2026 Medical SmartBooking · All rights reserved</div>
+  <div class="footer-bottom">© 2026 CareFlow · Medical SmartBooking</div>
 </footer>
 
+<!-- Main application logic for calendar, forms, and data persistence -->
 <script src="assets/js/script.js"></script>
 </body>
 </html>

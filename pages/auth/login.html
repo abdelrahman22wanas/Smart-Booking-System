@@ -3,20 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medical SmartBooking — Login</title>
+  <title>CareFlow — Login</title>
+  <!-- Google Fonts for typography -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #eef4f9;
+      --bg: #edfdf9;
       --surface: #ffffff;
-      --ink: #0f172a;
-      --ink-muted: #51627a;
-      --accent: #0891b2;
-      --accent-light: #e0f7ff;
+      --ink: #102a2a;
+      --ink-muted: #55706d;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --accent-light: #ccfbf1;
+      --secondary: #14b8a6;
       --accent2: #f59e0b;
-      --border: #d7e1ea;
+      --border: #cde8e1;
+      --input-bg: #ffffff;
+      --input-focus: rgba(15,118,110,.14);
+      --shadow-accent: rgba(15,118,110,.25);
+      --shadow-elevated: rgba(0,0,0,.14);
       --radius: 14px;
+    }
+    html[data-theme="dark"] {
+      --bg: #071a19;
+      --surface: #0d2422;
+      --ink: #ecfdf9;
+      --ink-muted: #9fc9c3;
+      --accent: #2dd4bf;
+      --accent-dark: #14b8a6;
+      --accent-light: #134e4a;
+      --secondary: #5eead4;
+      --accent2: #fbbf24;
+      --border: #1f4b46;
+      --input-bg: #12312e;
+      --input-focus: rgba(45,212,191,.18);
+      --shadow-accent: rgba(45,212,191,.22);
+      --shadow-elevated: rgba(0,0,0,.32);
     }
     body {
       font-family: 'DM Sans', sans-serif;
@@ -27,6 +50,25 @@
       grid-template-columns: 1fr 1fr;
     }
     h1,h2,h3 { font-family: 'Syne', sans-serif; }
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 20;
+      border: 1px solid rgba(255,255,255,.18);
+      background: var(--surface);
+      color: var(--ink);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 28px var(--shadow-elevated);
+    }
+    .theme-toggle:hover { background: var(--accent-light); color: var(--accent); }
 
     .left-panel {
       background: var(--ink);
@@ -42,7 +84,7 @@
       position: absolute;
       width: 500px; height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(8,145,178,0.35) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(15,118,110,0.35) 0%, transparent 70%);
       top: -100px; left: -100px;
       pointer-events: none;
     }
@@ -51,7 +93,7 @@
       position: absolute;
       width: 350px; height: 350px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(20,184,166,0.18) 0%, transparent 70%);
       bottom: -80px; right: -80px;
       pointer-events: none;
     }
@@ -68,19 +110,19 @@
     }
     .panel-tag {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(8,145,178,0.2); color: #67e8f9;
+      background: rgba(20,184,166,0.2); color: #99f6e4;
       padding: .3rem .9rem; border-radius: 99px;
       font-size: .78rem; font-weight: 600; letter-spacing: .05em;
       margin-bottom: 1.5rem;
     }
-    .panel-tag::before { content:''; width:7px; height:7px; border-radius:50%; background:#6ee9a8; }
+    .panel-tag::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--secondary); }
     .panel-content h2 {
       font-size: clamp(2rem, 3.5vw, 2.8rem);
       font-weight: 800; color: #fff;
       line-height: 1.15; letter-spacing: -1px;
       margin-bottom: 1rem;
     }
-    .panel-content h2 em { font-style: normal; color: var(--accent2); }
+    .panel-content h2 em { font-style: normal; color: var(--secondary); }
     .panel-content p { color: rgba(255,255,255,.55); font-size: .95rem; line-height: 1.7; max-width: 380px; }
     .panel-features {
       display: flex; flex-direction: column; gap: .7rem;
@@ -122,12 +164,12 @@
       width: 100%; padding: .8rem 1rem .8rem 2.8rem;
       border: 1.5px solid var(--border); border-radius: var(--radius);
       font-family: 'DM Sans', sans-serif; font-size: .95rem;
-      background: var(--bg); color: var(--ink);
+      background: var(--input-bg); color: var(--ink);
       outline: none; transition: border-color .2s, box-shadow .2s;
     }
     .form-group input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(8,145,178,.1);
+      box-shadow: 0 0 0 3px var(--input-focus);
     }
     .form-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -143,9 +185,9 @@
       border-radius: 99px; font-family: 'Syne', sans-serif;
       font-size: 1rem; font-weight: 700;
       transition: transform .18s, box-shadow .18s;
-      box-shadow: 0 4px 16px rgba(8,145,178,.25);
+      box-shadow: 0 4px 16px var(--shadow-accent);
     }
-    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(8,145,178,.3); }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow-accent); background: var(--accent-dark); }
     .divider {
       display: flex; align-items: center; gap: 1rem;
       margin: 1.5rem 0; color: var(--ink-muted); font-size: .82rem;
@@ -172,19 +214,24 @@
   </style>
 </head>
 <body>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
+
+<!-- PAGE: Login (pages/auth/login.html)
+     Split-panel layout: brand benefits on left (dark), sign-in form on right (light)
+     User enters email/password to authenticate and access their appointments. -->
 
 <div class="left-panel">
-  <a href="smartbooking.html" class="panel-logo">Medical<span>SmartBooking</span></a>
+  <a href="../../smartbooking.html" class="panel-logo">Care<span>Flow</span></a>
   <div class="panel-content">
-    <h2>Welcome<br/>Back to<br/><em>SmartBooking</em></h2>
-    <p>Manage your appointments, view your schedule, and stay on top of every booking — all in one place.</p>
+    <h2>Welcome<br/>Back to<br/><em>CareFlow</em></h2>
+    <p>Medical SmartBooking for managing appointments, schedules, and every booking in one place.</p>
     <div class="panel-features">
       <div class="panel-feature">Real-time availability</div>
       <div class="panel-feature">Instant email confirmations</div>
       <div class="panel-feature">Conflict-free scheduling</div>
     </div>
   </div>
-  <div class="panel-bottom">© 2026 Medical SmartBooking · All rights reserved</div>
+  <div class="panel-bottom">© 2026 CareFlow · Medical SmartBooking</div>
 </div>
 
 <div class="right-panel">
@@ -221,11 +268,11 @@
     </form>
 
     <div class="register-link">
-      New to Medical SmartBooking? <a href="register.html">Create an account</a>
+      New to CareFlow? <a href="register.html">Create an account</a>
     </div>
   </div>
 </div>
 
-  <script src="assets/js/script.js"></script>
+  <script src="../../assets/js/script.js"></script>
 </body>
 </html>
