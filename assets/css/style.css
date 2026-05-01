@@ -646,7 +646,7 @@ small {
   z-index: 1000;
   margin-top: 0.5rem;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent);
   border-radius: 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   min-width: 280px;
@@ -654,6 +654,8 @@ small {
 
 .date-picker-panel {
   padding: 1rem;
+  background: var(--surface);
+  border-radius: 14px;
 }
 
 .date-picker-head {
