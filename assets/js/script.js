@@ -91,12 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Page: all pages that include assets/js/script.js
   // Purpose: Bootstraps only the features that are present on the current page.
 
-<<<<<<< HEAD
   setupThemeMode();            // Shared: Light/dark mode toggle
   setupPageTransitions();      // Shared: Smooth fade between internal pages
 
-=======
->>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
   // Setup interactive elements
   setupHeroCalendar();         // Homepage: Interactive month/day calendar
   setupSlotButtons();           // Homepage: Click time slots
@@ -228,7 +225,6 @@ function setCurrentUser(user) {
   writeStore(CURRENT_USER_KEY, user);  // Save current session user
 }
 
-<<<<<<< HEAD
 function apiAvailable() {
   return window.location.protocol === 'http:' || window.location.protocol === 'https:';
 }
@@ -279,9 +275,6 @@ async function updateApiAppointmentStatus(id, status) {
     body: JSON.stringify({ status })
   });
 }
-
-=======
->>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
 // Page: smartbooking.html
 // Targets: #calendarMonthLabel, #calendarPrevBtn, #calendarNextBtn, #calendarGrid, #quickDate
 // Purpose: Renders the homepage calendar, handles month navigation, and syncs selected date.
@@ -589,7 +582,6 @@ function setupQuickAvailability() {
       time: time.value
     }));
     window.location.href = '../../pages/appointments/book-appointment.html';
-<<<<<<< HEAD
   });
 }
 
@@ -748,10 +740,6 @@ function setupBookingDatePicker() {
     if (event.key === 'Escape') {
       closePicker();
     }
-=======
->>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
-  });
-}
 
 // ============================================================================
 // SECTION 4: FORM HANDLERS
@@ -1086,11 +1074,7 @@ function renderAppointmentsPage() {
  * Filters appointments by logged-in user's email
  * Shows empty state if no appointments
  */
-<<<<<<< HEAD
 async function drawAppointments(root) {
-=======
-function drawAppointments(root) {
->>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
   // Page: pages/dashboard/my-appointments.html
   // Targets: injected table/buttons inside #appointments-root
   // Purpose: Builds current user's appointment table and supports cancellation UI states.
@@ -1187,19 +1171,11 @@ function renderAdminPage() {
  * Build and display admin dashboard
  * Shows summary stats and full appointments table
  */
-<<<<<<< HEAD
 async function drawAdmin(root) {
   // Page: pages/dashboard/admin-dashboard.html
   // Targets: injected stats cards/table inside #admin-root
   // Purpose: Displays booking KPIs and admin controls (complete/cancel) for all appointments.
   const appointments = await loadAppointments();
-=======
-function drawAdmin(root) {
-  // Page: pages/dashboard/admin-dashboard.html
-  // Targets: injected stats cards/table inside #admin-root
-  // Purpose: Displays booking KPIs and admin controls (complete/cancel) for all appointments.
-  const appointments = getAppointments();
->>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
   const today = new Date().toISOString().slice(0, 10);  // Today's date
 
   // STATS: Calculate key numbers
@@ -1279,7 +1255,6 @@ function drawAdmin(root) {
  * @param {string} id - Appointment ID
  * @param {string} status - New status (Confirmed, Completed, Cancelled)
  */
-<<<<<<< HEAD
 async function updateAppointmentStatus(id, status) {
   // Page: shared utility used by user/admin dashboards
   // Purpose: Updates one appointment status in storage while keeping all others unchanged.
@@ -1287,12 +1262,7 @@ async function updateAppointmentStatus(id, status) {
     await updateApiAppointmentStatus(id, status);
     return;
   }
-
-=======
-function updateAppointmentStatus(id, status) {
-  // Page: shared utility used by user/admin dashboards
-  // Purpose: Updates one appointment status in storage while keeping all others unchanged.
->>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
+  
   const appointments = getAppointments();
   const updated = appointments.map((item) => {
     if (item.id !== id) return item;
@@ -1315,4 +1285,6 @@ function setMessage(node, text, isSuccess) {
   node.textContent = text;
   node.style.color = isSuccess ? 'var(--accent)' : '#b42318';  // Accent or Red
 }
+
+
 
