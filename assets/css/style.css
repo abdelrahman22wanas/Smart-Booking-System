@@ -1,3 +1,16 @@
+/* ============================================================================
+   MEDICAL SMARTBOOKING - UTILITY STYLESHEET
+   ============================================================================
+   This stylesheet provides a utility-class framework for secondary pages:
+   - pages/auth/login.html
+   - pages/auth/register.html
+   - pages/appointments/book-appointment.html
+   - pages/dashboard/my-appointments.html
+   - pages/dashboard/admin-dashboard.html
+   
+   Contains: layout grid, responsive breakpoints, buttons, forms, spacing utilities.
+   ============================================================================ */
+
 * {
   box-sizing: border-box;
 }
@@ -32,6 +45,9 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+/* SECTION: Navigation Components
+   Responsive navbar with mobile toggle support.
+   Used in: auth pages, appointment pages, dashboard pages. */
 .navbar {
   position: relative;
 }
@@ -102,6 +118,9 @@ body {
   align-items: flex-start;
 }
 
+/* SECTION: Form Controls (Input, Select, Labels)
+   Used in: Login, Register, Book Appointment forms.
+   Provides consistent styling for form elements across pages. */
 .nav-link {
   display: inline-block;
   color: var(--ink-muted);
@@ -114,6 +133,9 @@ body {
   color: var(--ink);
 }
 
+/* SECTION: Button Styles
+   Reusable button classes: .btn, .btn-dark, .btn-outline-secondary, .btn-sm
+   Used across all utility-styled pages for actions and navigation. */
 .btn {
   display: inline-block;
   border: 1px solid transparent;
@@ -145,6 +167,9 @@ body {
   border-color: #c9c4bc;
 }
 
+/* SECTION: Responsive Grid System
+   CSS Grid and Flexbox utilities for responsive layout.
+   Supports mobile-first design with breakpoints at 768px (tablet) and 992px (desktop). */
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -298,6 +323,9 @@ body {
   gap: 0.5rem;
 }
 
+/* SECTION: Spacing & Layout Utilities
+   Padding, margin, display, and alignment utilities.
+   Classes like: .p-4, .mb-3, .mt-2, .d-flex, .text-center, etc. */
 .d-flex {
   display: flex;
 }
@@ -322,6 +350,9 @@ body {
   color: var(--ink-muted);
 }
 
+/* SECTION: Typography Utilities
+   Font size classes (.h1 through .h5, .display-6, .lead, .fs-5)
+   and text styling (.fw-bold, .text-secondary). */
 .small,
 small {
   font-size: 0.875em;
@@ -380,6 +411,8 @@ small {
   font-size: 1.25rem;
 }
 
+/* SECTION: Form Styling
+   Label and form input utilities used in auth and booking pages. */
 .form-label {
   display: block;
   margin-bottom: 0.4rem;

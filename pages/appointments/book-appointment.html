@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Medical SmartBooking — Book Appointment</title>
+  <!-- Google Fonts for typography -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Utility stylesheet for form and layout styles -->
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
     body { font-family: 'DM Sans', sans-serif; background: #eef4f9; }
@@ -16,19 +18,24 @@
   </style>
 </head>
 <body>
+  <!-- PAGE: Book Appointment (pages/appointments/book-appointment.html)
+       Form for users to book a healthcare appointment.
+       Collects: Name, Email, Service, Date, Time, and optional Notes.
+       Auto-fills if user is logged in or coming from quick-book on homepage. -->
+  
   <nav class="navbar navbar-expand-lg bg-white border-bottom">
     <div class="container py-2">
-      <a class="brand" href="smartbooking.html">Medical SmartBooking</a>
+      <a class="brand" href="../../smartbooking.html">Medical SmartBooking</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto gap-lg-2">
-          <li class="nav-item"><a class="nav-link" href="smartbooking.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="../../smartbooking.html">Home</a></li>
           <li class="nav-item"><a class="nav-link active" href="book-appointment.html">Book</a></li>
-          <li class="nav-item"><a class="nav-link" href="my-appointments.html">My Appointments</a></li>
-          <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Admin</a></li>
-          <li class="nav-item"><a class="btn btn-dark btn-sm ms-lg-2" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="../dashboard/my-appointments.html">My Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="../dashboard/admin-dashboard.html">Admin</a></li>
+          <li class="nav-item"><a class="btn btn-dark btn-sm ms-lg-2" href="../auth/login.html">Login</a></li>
         </ul>
       </div>
     </div>
@@ -77,7 +84,7 @@
         </div>
         <div class="col-12 d-flex gap-2 flex-wrap">
           <button class="btn btn-accent px-4" type="submit">Confirm Booking</button>
-          <a class="btn btn-outline-secondary" href="my-appointments.html">Go to My Appointments</a>
+          <a class="btn btn-outline-secondary" href="../dashboard/my-appointments.html">Go to My Appointments</a>
         </div>
         <div class="col-12">
           <p id="bookingMessage" class="small"></p>

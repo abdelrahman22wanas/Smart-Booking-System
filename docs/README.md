@@ -5,11 +5,11 @@ Medical SmartBooking is a multi-page healthcare appointment booking website with
 ## Website Structure (Sitemap)
 
 - Home: `smartbooking.html`
-- Login: `login.html`
-- Register: `register.html`
-- Book Appointment: `book-appointment.html`
-- My Appointments (User Dashboard): `my-appointments.html`
-- Admin Dashboard: `admin-dashboard.html`
+- Login: `pages/auth/login.html`
+- Register: `pages/auth/register.html`
+- Book Appointment: `pages/appointments/book-appointment.html`
+- My Appointments (User Dashboard): `pages/dashboard/my-appointments.html`
+- Admin Dashboard: `pages/dashboard/admin-dashboard.html`
 
 ## Development Technologies
 

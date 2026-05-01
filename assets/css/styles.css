@@ -1,5 +1,19 @@
+/* ============================================================================
+   MEDICAL SMARTBOOKING - HOMEPAGE STYLES (smartbooking.html)
+   ============================================================================
+   This stylesheet contains all design system variables and component styles
+   for the homepage. It defines colors, spacing, shadows, and animations used
+   throughout the landing page layout.
+   ============================================================================ */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ============================================================================
+   DESIGN SYSTEM: CSS VARIABLES
+   ============================================================================
+   Centralized color palette, spacing tokens, and visual utilities.
+   Used across all homepage sections for consistent theming.
+*/
 :root {
   --bg: #eef4f9;
   --surface: #ffffff;
@@ -15,6 +29,8 @@
 
 html { scroll-behavior: smooth; }
 
+/* PAGE: smartbooking.html - BODY & TYPOGRAPHY
+   Establishes base typography and global text styles using Google Fonts */
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
@@ -25,7 +41,8 @@ body {
 
 h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
 
-
+/* SECTION: Navigation Bar (top of page)
+   Sticky header with branding and main navigation links */
 nav {
   position: sticky; top: 0; z-index: 100;
   background: rgba(238,244,249,0.88);
@@ -57,6 +74,9 @@ nav ul a:hover { color: var(--accent); }
 }
 .btn-login:hover { background: var(--accent); }
 
+/* SECTION: Hero Section
+   Displays headline, tagline, CTA buttons, and animated calendar visual.
+   Layout: Two-column grid with text on left, calendar on right. */
 .hero {
   min-height: 88vh;
   display: grid; grid-template-columns: 1fr 1fr;
@@ -144,6 +164,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .cal-day.available { color: var(--accent); font-weight: 600; }
 .cal-day.selected.available { color: #fff; }
 
+/* SECTION: Quick Booking Area
+   Service/date/time selector with "Check Availability" button.
+   Enables quick appointment booking from homepage. */
 .booking-section {
   background: var(--surface);
   padding: 5rem 5%;
@@ -190,6 +213,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 }
 .btn-check:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(8,145,178,.3); }
 
+/* SECTION: Healthcare Services
+   Grid of 5 service cards showing Doctor, Dentist, Therapist, Cardiologist, Pediatrician.
+   Each card displays icon, description, duration, cost, and "Book Now" button. */
 .healthcare-services-section { padding: 5rem 5%; background: var(--bg); }
 .services-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
@@ -217,6 +243,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 }
 .service-book-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(8,145,178,.3); }
 
+/* SECTION: How It Works / Process Steps
+   4-step process flow: Create Account → Choose Service → Select Time → Confirm & Email
+   Displayed as card grid with step numbers and icons. */
 .how-section { padding: 5rem 5%; }
 .steps-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
@@ -238,6 +267,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
 .step-card p { font-size: .88rem; color: var(--ink-muted); }
 
+/* SECTION: Features Highlight
+   Dark background section listing key product benefits (6 feature chips).
+   Used to build credibility and show differentiators. */
 .features-section {
   background: var(--ink); color: #fff;
   padding: 5rem 5%;
@@ -264,6 +296,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   font-size: .75rem; font-weight: 800;
 }
 
+/* SECTION: Available Time Slots
+   Shows today's available/booked appointment slots in a row grid.
+   Slots can be "active" (selected), "booked" (unavailable), or open. */
 .slots-section { padding: 5rem 5%; }
 .slots-header {
   display: flex; justify-content: space-between; align-items: flex-end;
@@ -303,6 +338,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   font-weight: 500;
 }
 
+/* SECTION: Testimonials
+   User reviews section with star rating and quote.
+   Builds social proof by showing positive customer feedback. */
 .testimonial-section { padding: 5rem 5%; display: flex; justify-content: center; }
 .testimonial-card {
   background: var(--surface); border: 1px solid var(--border);
@@ -319,6 +357,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .testimonial-author { font-size: .82rem; color: var(--ink-muted); font-weight: 600; letter-spacing: .08em; }
 
 
+/* SECTION: Call-to-Action
+   Large banner with headline and primary CTA button.
+   Final conversion section before footer to prompt booking. */
 .cta-section {
   background: var(--accent-light); border-radius: 32px;
   margin: 0 3% 4rem; padding: 5rem 5%;
@@ -330,6 +371,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   padding: .9rem 2.4rem;
 }
 
+/* SECTION: Footer
+   Dark footer with company info, quick links, legal links, and social icons.
+   Spans all pages; contains contact info and site navigation. */
 footer {
   background: var(--ink); color: #fff;
   padding: 4rem 5% 2rem;
