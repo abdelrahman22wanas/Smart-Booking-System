@@ -692,10 +692,11 @@ small {
 }
 
 .date-picker-weekdays span {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--ink-muted);
-  padding: 0.5rem 0;
+  padding: 4px 0;
+  min-width: 32px;
 }
 
 .date-picker-grid {
@@ -705,14 +706,17 @@ small {
 }
 
 .date-picker-grid button {
-  min-height: 36px;
-  border: 1px solid transparent;
+  min-height: auto;
+  padding: 6px 2px;
+  border: none;
   border-radius: 8px;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
   font-size: 0.85rem;
-  transition: background .15s, border-color .15s;
+  transition: background .15s;
+  font-family: inherit;
+  min-width: 32px;
 }
 
 .date-picker-grid button:hover {
@@ -727,14 +731,38 @@ small {
 }
 
 .date-picker-grid button.today {
-  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
   font-weight: 700;
 }
 
 .date-picker-grid button:disabled {
   color: var(--calendar-other);
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 1;
+}
+
+.date-picker-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.date-picker-footer button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color .2s;
+  padding: 0.5rem 1rem;
+}
+
+.date-picker-footer button:hover {
+  color: var(--accent-dark);
 }
 
 .date-picker-input {
