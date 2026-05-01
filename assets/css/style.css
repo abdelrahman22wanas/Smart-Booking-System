@@ -189,6 +189,7 @@ body.page-leaving {
   color: var(--accent);
 }
 
+<<<<<<< HEAD
 .theme-toggle {
   border: 1px solid var(--border);
   background: var(--surface);
@@ -211,6 +212,8 @@ body.page-leaving {
   transform: translateY(-1px);
 }
 
+=======
+>>>>>>> eefa3f236d21db752123d21a9ae2a1e0fa087dbd
 /* SECTION: Button Styles
    Reusable button classes: .btn, .btn-dark, .btn-outline-secondary, .btn-sm
    Used across all utility-styled pages for actions and navigation. */
