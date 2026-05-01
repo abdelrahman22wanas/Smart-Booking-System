@@ -222,13 +222,17 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   display: grid; grid-template-columns: repeat(7, 1fr);
   gap: 4px; text-align: center;
 }
-.cal-day-label { font-size: .72rem; color: var(--ink-muted); font-weight: 600; padding: 4px 0; }
+.cal-day-label { 
+  font-size: .72rem; color: var(--ink-muted); font-weight: 600; 
+  padding: 4px 0; min-width: 32px; overflow: hidden;
+}
 .cal-day {
   font-size: .85rem; padding: 6px 2px; border-radius: 8px;
   cursor: pointer; transition: background .15s;
   border: none;
   background: transparent;
   font-family: inherit;
+  min-width: 32px;
 }
 .cal-day:hover { background: var(--accent-light); color: var(--accent); }
 .cal-day.today { background: var(--accent); color: #fff; font-weight: 700; }

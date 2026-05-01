@@ -6,3 +6,4 @@ CODE_DOCUMENTATION.md
 node_modules/
 data/*.sqlite
 data/*.sqlite-*
+web_project/

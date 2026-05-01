@@ -275,6 +275,7 @@ async function updateApiAppointmentStatus(id, status) {
     body: JSON.stringify({ status })
   });
 }
+
 // Page: smartbooking.html
 // Targets: #calendarMonthLabel, #calendarPrevBtn, #calendarNextBtn, #calendarGrid, #quickDate
 // Purpose: Renders the homepage calendar, handles month navigation, and syncs selected date.
@@ -740,6 +741,8 @@ function setupBookingDatePicker() {
     if (event.key === 'Escape') {
       closePicker();
     }
+  });
+}
 
 // ============================================================================
 // SECTION 4: FORM HANDLERS
@@ -1262,7 +1265,7 @@ async function updateAppointmentStatus(id, status) {
     await updateApiAppointmentStatus(id, status);
     return;
   }
-  
+
   const appointments = getAppointments();
   const updated = appointments.map((item) => {
     if (item.id !== id) return item;
@@ -1285,6 +1288,4 @@ function setMessage(node, text, isSuccess) {
   node.textContent = text;
   node.style.color = isSuccess ? 'var(--accent)' : '#b42318';  // Accent or Red
 }
-
-
 

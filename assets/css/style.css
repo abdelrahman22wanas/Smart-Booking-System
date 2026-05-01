@@ -500,8 +500,10 @@ small {
    Label and form input utilities used in auth and booking pages. */
 .form-label {
   display: block;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   font-weight: 600;
+  color: var(--ink);
+  font-size: 0.95rem;
 }
 
 .form-control,
