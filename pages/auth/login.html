@@ -3,20 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SmartBooking — Login</title>
+  <title>CareFlow — Login</title>
+  <!-- Google Fonts for typography -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f5f3ee;
+      --bg: #edfdf9;
       --surface: #ffffff;
-      --ink: #131210;
-      --ink-muted: #6b6860;
-      --accent: #1a6b4a;
-      --accent-light: #e8f5ef;
-      --accent2: #f0a500;
-      --border: #e0ddd6;
+      --ink: #102a2a;
+      --ink-muted: #55706d;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --accent-light: #ccfbf1;
+      --secondary: #14b8a6;
+      --accent2: #f59e0b;
+      --border: #cde8e1;
+      --input-bg: #ffffff;
+      --input-focus: rgba(15,118,110,.14);
+      --shadow-accent: rgba(15,118,110,.25);
+      --shadow-elevated: rgba(0,0,0,.14);
       --radius: 14px;
+    }
+    html[data-theme="dark"] {
+      --bg: #071a19;
+      --surface: #0d2422;
+      --ink: #ecfdf9;
+      --ink-muted: #9fc9c3;
+      --accent: #2dd4bf;
+      --accent-dark: #14b8a6;
+      --accent-light: #134e4a;
+      --secondary: #5eead4;
+      --accent2: #fbbf24;
+      --border: #1f4b46;
+      --input-bg: #12312e;
+      --input-focus: rgba(45,212,191,.18);
+      --shadow-accent: rgba(45,212,191,.22);
+      --shadow-elevated: rgba(0,0,0,.32);
     }
     body {
       font-family: 'DM Sans', sans-serif;
@@ -27,8 +50,26 @@
       grid-template-columns: 1fr 1fr;
     }
     h1,h2,h3 { font-family: 'Syne', sans-serif; }
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 20;
+      border: 1px solid rgba(255,255,255,.18);
+      background: var(--surface);
+      color: var(--ink);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 28px var(--shadow-elevated);
+    }
+    .theme-toggle:hover { background: var(--accent-light); color: var(--accent); }
 
-    /* LEFT PANEL */
     .left-panel {
       background: var(--ink);
       padding: 3rem;
@@ -43,7 +84,7 @@
       position: absolute;
       width: 500px; height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(26,107,74,0.35) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(15,118,110,0.35) 0%, transparent 70%);
       top: -100px; left: -100px;
       pointer-events: none;
     }
@@ -52,7 +93,7 @@
       position: absolute;
       width: 350px; height: 350px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(240,165,0,0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(20,184,166,0.18) 0%, transparent 70%);
       bottom: -80px; right: -80px;
       pointer-events: none;
     }
@@ -69,19 +110,19 @@
     }
     .panel-tag {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: rgba(26,107,74,0.25); color: #6ee9a8;
+      background: rgba(20,184,166,0.2); color: #99f6e4;
       padding: .3rem .9rem; border-radius: 99px;
       font-size: .78rem; font-weight: 600; letter-spacing: .05em;
       margin-bottom: 1.5rem;
     }
-    .panel-tag::before { content:''; width:7px; height:7px; border-radius:50%; background:#6ee9a8; }
+    .panel-tag::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--secondary); }
     .panel-content h2 {
       font-size: clamp(2rem, 3.5vw, 2.8rem);
       font-weight: 800; color: #fff;
       line-height: 1.15; letter-spacing: -1px;
       margin-bottom: 1rem;
     }
-    .panel-content h2 em { font-style: normal; color: var(--accent2); }
+    .panel-content h2 em { font-style: normal; color: var(--secondary); }
     .panel-content p { color: rgba(255,255,255,.55); font-size: .95rem; line-height: 1.7; max-width: 380px; }
     .panel-features {
       display: flex; flex-direction: column; gap: .7rem;
@@ -100,7 +141,6 @@
     }
     .panel-bottom { color: rgba(255,255,255,.25); font-size: .78rem; position: relative; z-index: 1; }
 
-    /* RIGHT PANEL */
     .right-panel {
       display: flex; align-items: center; justify-content: center;
       padding: 3rem 4rem;
@@ -124,12 +164,12 @@
       width: 100%; padding: .8rem 1rem .8rem 2.8rem;
       border: 1.5px solid var(--border); border-radius: var(--radius);
       font-family: 'DM Sans', sans-serif; font-size: .95rem;
-      background: var(--bg); color: var(--ink);
+      background: var(--input-bg); color: var(--ink);
       outline: none; transition: border-color .2s, box-shadow .2s;
     }
     .form-group input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(26,107,74,.1);
+      box-shadow: 0 0 0 3px var(--input-focus);
     }
     .form-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -145,9 +185,9 @@
       border-radius: 99px; font-family: 'Syne', sans-serif;
       font-size: 1rem; font-weight: 700;
       transition: transform .18s, box-shadow .18s;
-      box-shadow: 0 4px 16px rgba(26,107,74,.25);
+      box-shadow: 0 4px 16px var(--shadow-accent);
     }
-    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.3); }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow-accent); background: var(--accent-dark); }
     .divider {
       display: flex; align-items: center; gap: 1rem;
       margin: 1.5rem 0; color: var(--ink-muted); font-size: .82rem;
@@ -155,15 +195,6 @@
     .divider::before, .divider::after {
       content: ''; flex: 1; height: 1px; background: var(--border);
     }
-    .btn-google {
-      width: 100%; padding: .8rem;
-      background: var(--surface); color: var(--ink);
-      border: 1.5px solid var(--border); border-radius: 99px; cursor: pointer;
-      font-family: 'DM Sans', sans-serif; font-size: .92rem; font-weight: 500;
-      display: flex; align-items: center; justify-content: center; gap: .6rem;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .btn-google:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,.07); }
     .register-link {
       text-align: center; margin-top: 1.8rem;
       font-size: .88rem; color: var(--ink-muted);
@@ -183,66 +214,69 @@
   </style>
 </head>
 <body>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
 
-<!-- LEFT PANEL -->
+<!-- PAGE: Login (pages/auth/login.html)
+     Split-panel layout: brand benefits on left (dark), sign-in form on right (light)
+     User enters email/password to authenticate and access their appointments. -->
+
+<!-- PAGE: Login (pages/auth/login.html)
+     Split-panel layout: brand benefits on left (dark), sign-in form on right (light)
+     User enters email/password to authenticate and access their appointments. -->
+
 <div class="left-panel">
-  <a href="smartbooking.html" class="panel-logo">Smart<span>Booking</span></a>
+  <a href="../../smartbooking.html" class="panel-logo">Care<span>Flow</span></a>
   <div class="panel-content">
-    <div class="panel-tag">Appointment System v1.0</div>
-    <h2>Welcome<br/>Back to<br/><em>SmartBooking</em></h2>
-    <p>Manage your appointments, view your schedule, and stay on top of every booking — all in one place.</p>
+    <h2>Welcome<br/>Back to<br/><em>CareFlow</em></h2>
+    <p>Medical SmartBooking for managing appointments, schedules, and every booking in one place.</p>
     <div class="panel-features">
       <div class="panel-feature">Real-time availability</div>
       <div class="panel-feature">Instant email confirmations</div>
       <div class="panel-feature">Conflict-free scheduling</div>
     </div>
   </div>
-  <div class="panel-bottom">© 2026 SmartBooking · All rights reserved</div>
+  <div class="panel-bottom">© 2026 CareFlow · Medical SmartBooking</div>
 </div>
 
-<!-- RIGHT PANEL -->
 <div class="right-panel">
   <div class="form-box">
     <h1>Sign In</h1>
     <p class="subtitle">Don't have an account? <a href="register.html">Create one →</a></p>
 
-    <div class="form-group">
-      <label>EMAIL ADDRESS</label>
-      <div class="input-wrap">
-        <span class="icon">📧</span>
-        <input type="email" placeholder="you@example.com"/>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">EMAIL ADDRESS</label>
+        <div class="input-wrap">
+          <span class="icon">📧</span>
+          <input id="loginEmail" type="email" placeholder="you@example.com" required />
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>PASSWORD</label>
-      <div class="input-wrap">
-        <span class="icon">🔒</span>
-        <input type="password" placeholder="Enter your password"/>
+      <div class="form-group">
+        <label for="loginPassword">PASSWORD</label>
+        <div class="input-wrap">
+          <span class="icon">🔒</span>
+          <input id="loginPassword" type="password" placeholder="Enter your password" required />
+        </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <label class="remember">
-        <input type="checkbox"/> Remember me
-      </label>
-      <a href="forgot-password.html" class="forgot">Forgot password?</a>
-    </div>
+      <div class="form-row">
+        <label class="remember">
+          <input type="checkbox"/> Remember me
+        </label>
+        <a href="register.html" class="forgot">Need help?</a>
+      </div>
 
-    <button class="btn-submit">Sign In →</button>
-
-    <div class="divider">or continue with</div>
-
-    <button class="btn-google">
-      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      Continue with Google
-    </button>
+      <button class="btn-submit" type="submit">Sign In →</button>
+      <p id="loginMessage" style="margin-top: .9rem; font-size: .86rem;"></p>
+    </form>
 
     <div class="register-link">
-      New to SmartBooking? <a href="register.html">Create an account</a>
+      New to CareFlow? <a href="register.html">Create an account</a>
     </div>
   </div>
 </div>
 
+  <script src="../../assets/js/script.js"></script>
 </body>
 </html>

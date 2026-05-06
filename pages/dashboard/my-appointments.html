@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareFlow — My Appointments</title>
+  <!-- Google Fonts for typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Utility stylesheet for layout and table styles -->
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); }
+    h1, h2, h3 { font-family: 'Syne', sans-serif; }
+    .brand { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--accent); text-decoration: none; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+  </style>
+</head>
+<body>
+  <!-- PAGE: My Appointments Dashboard (pages/dashboard/my-appointments.html)
+       User dashboard showing only the logged-in user's booked appointments.
+       Displays: ID, Service, Date, Time, Status, and Cancel button.
+       Allows users to cancel pending/confirmed appointments. -->
+  
+  <nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container py-2">
+      <a class="brand" href="../../smartbooking.html">CareFlow</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../../smartbooking.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="../appointments/book-appointment.html">Book</a></li>
+          <li class="nav-item"><a class="nav-link active" href="my-appointments.html">My Appointments</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin-dashboard.html">Admin</a></li>
+          <li class="nav-item"><button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">☾</button></li>
+          <li class="nav-item"><a class="btn btn-dark btn-sm ms-lg-2" href="../auth/login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div id="appointments-root" class="panel p-4 p-md-5"></div>
+  </main>
+
+  <script src="../../assets/js/script.js"></script>
+</body>
+</html>

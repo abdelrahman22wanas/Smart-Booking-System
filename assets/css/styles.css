@@ -1,34 +1,104 @@
+/* ============================================================================
+   MEDICAL SMARTBOOKING - HOMEPAGE STYLES (smartbooking.html)
+   ============================================================================
+   This stylesheet contains all design system variables and component styles
+   for the homepage. It defines colors, spacing, shadows, and animations used
+   throughout the landing page layout.
+   ============================================================================ */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ============================================================================
+   DESIGN SYSTEM: CSS VARIABLES
+   ============================================================================
+   Centralized color palette, spacing tokens, and visual utilities.
+   Used across all homepage sections for consistent theming.
+*/
 :root {
-  --bg: #f5f3ee;
+  --bg: #edfdf9;
   --surface: #ffffff;
-  --ink: #131210;
-  --ink-muted: #6b6860;
-  --accent: #1a6b4a;
-  --accent-light: #e8f5ef;
-  --accent2: #f0a500;
-  --border: #e0ddd6;
+  --ink: #102a2a;
+  --ink-muted: #55706d;
+  --accent: #0f766e;
+  --accent-dark: #115e59;
+  --accent-light: #ccfbf1;
+  --secondary: #14b8a6;
+  --accent2: #f59e0b;
+  --border: #cde8e1;
   --radius: 14px;
   --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  --nav-bg: rgba(237,253,249,0.9);
+  --shadow-accent: rgba(15,118,110,.25);
+  --band-bg: #102a2a;
+  --band-ink: #ffffff;
+  --input-bg: #ffffff;
+  --input-focus: rgba(15,118,110,.14);
+  --input-hover-bg: #f8fffd;
+  --date-field-bg: linear-gradient(180deg, #ffffff 0%, #f8fffd 100%);
+  --booked-bg: #f1f5f9;
+  --booked-border: #cbd5e1;
+  --calendar-other: #94a3b8;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg: #071a19;
+  --surface: #0d2422;
+  --ink: #ecfdf9;
+  --ink-muted: #9fc9c3;
+  --accent: #2dd4bf;
+  --accent-dark: #14b8a6;
+  --accent-light: #134e4a;
+  --secondary: #5eead4;
+  --accent2: #fbbf24;
+  --border: #1f4b46;
+  --shadow: 0 12px 36px rgba(0,0,0,0.28);
+  --nav-bg: rgba(7,26,25,0.9);
+  --shadow-accent: rgba(45,212,191,.22);
+  --band-bg: #0d2422;
+  --band-ink: #ecfdf9;
+  --input-bg: #12312e;
+  --input-focus: rgba(45,212,191,.18);
+  --input-hover-bg: #173b37;
+  --date-field-bg: linear-gradient(180deg, #173b37 0%, #12312e 100%);
+  --booked-bg: #102a2a;
+  --booked-border: #1f4b46;
+  --calendar-other: #5f8580;
+  color-scheme: dark;
 }
 
 html { scroll-behavior: smooth; }
 
+/* PAGE: smartbooking.html - BODY & TYPOGRAPHY
+   Establishes base typography and global text styles using Google Fonts */
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   color: var(--ink);
   line-height: 1.6;
   overflow-x: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .32s ease, transform .32s ease;
+}
+
+body.page-ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.page-leaving {
+  opacity: 0;
+  transform: translateY(6px);
 }
 
 h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
 
-/* ── NAV ── */
+/* SECTION: Navigation Bar (top of page)
+   Sticky header with branding and main navigation links */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(245,243,238,0.88);
+  background: var(--nav-bg);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   padding: 0 5%;
@@ -49,15 +119,37 @@ nav ul a {
   transition: color .2s;
 }
 nav ul a:hover { color: var(--accent); }
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s, border-color .2s, color .2s, transform .18s;
+}
+.theme-toggle:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
 .btn-login {
-  background: var(--ink); color: #fff;
+  background: var(--accent); color: #fff;
   padding: .45rem 1.2rem; border-radius: 99px;
   font-size: 0.88rem; font-weight: 500;
   transition: background .2s;
 }
-.btn-login:hover { background: var(--accent); }
+.btn-login:hover { background: var(--accent-dark); }
 
-/* ── HERO ── */
+/* SECTION: Hero Section
+   Displays headline, tagline, CTA buttons, and animated calendar visual.
+   Layout: Two-column grid with text on left, calendar on right. */
 .hero {
   min-height: 88vh;
   display: grid; grid-template-columns: 1fr 1fr;
@@ -90,9 +182,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   padding: .8rem 1.8rem; border-radius: 99px;
   font-size: .95rem; font-weight: 600;
   text-decoration: none; transition: transform .18s, box-shadow .18s;
-  box-shadow: 0 4px 16px rgba(26,107,74,.25);
+  box-shadow: 0 4px 16px var(--shadow-accent);
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.32); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow-accent); background: var(--accent-dark); }
 .btn-outline {
   background: transparent; color: var(--ink);
   border: 1.5px solid var(--border);
@@ -108,7 +200,7 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .calendar-card {
   background: var(--surface);
   border-radius: 24px;
-  box-shadow: 0 12px 48px rgba(0,0,0,0.10);
+  box-shadow: var(--shadow);
   padding: 2rem;
   width: 340px;
   border: 1px solid var(--border);
@@ -130,17 +222,28 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   display: grid; grid-template-columns: repeat(7, 1fr);
   gap: 4px; text-align: center;
 }
-.cal-day-label { font-size: .72rem; color: var(--ink-muted); font-weight: 600; padding: 4px 0; }
+.cal-day-label { 
+  font-size: .72rem; color: var(--ink-muted); font-weight: 600; 
+  padding: 4px 0; min-width: 32px; overflow: hidden;
+}
 .cal-day {
   font-size: .85rem; padding: 6px 2px; border-radius: 8px;
   cursor: pointer; transition: background .15s;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  min-width: 32px;
 }
 .cal-day:hover { background: var(--accent-light); color: var(--accent); }
 .cal-day.today { background: var(--accent); color: #fff; font-weight: 700; }
-.cal-day.other { color: #ccc; }
-.cal-day.available { color: var(--accent); font-weight: 600; }
+.cal-day.selected { background: var(--accent); color: #fff; font-weight: 700; }
+.cal-day.other { color: var(--calendar-other); }
+.cal-day.available { color: var(--secondary); font-weight: 600; }
+.cal-day.selected.available { color: #fff; }
 
-/* ── BOOKING PANEL ── */
+/* SECTION: Quick Booking Area
+   Service/date/time selector with "Check Availability" button.
+   Enables quick appointment booking from homepage. */
 .booking-section {
   background: var(--surface);
   padding: 5rem 5%;
@@ -166,15 +269,45 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 }
 .booking-field select,
 .booking-field input {
-  width: 100%; padding: .75rem 1rem;
-  border: 1.5px solid var(--border); border-radius: var(--radius);
-  font-family: 'DM Sans', sans-serif; font-size: .95rem;
-  background: var(--bg); color: var(--ink);
-  outline: none; transition: border-color .2s;
+  width: 100%; min-height: 50px; padding: .82rem 1rem;
+  border: 1.5px solid var(--border); border-radius: 16px;
+  font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700;
+  background: var(--input-bg); color: var(--ink);
+  outline: none; transition: background .2s, border-color .2s, box-shadow .2s;
+}
+.booking-field select {
+  padding-right: 2.75rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) 50%,
+    calc(100% - 14px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
   appearance: none;
 }
+.booking-field input[type="date"] {
+  min-height: 52px;
+  padding-right: 1rem;
+  background: var(--date-field-bg);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
+}
+.booking-field select:hover,
+.booking-field input:hover { background-color: var(--input-hover-bg); border-color: var(--accent); }
 .booking-field select:focus,
-.booking-field input:focus { border-color: var(--accent); }
+.booking-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--input-focus); }
+.booking-field input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: .82;
+  padding: .34rem;
+  border-radius: 999px;
+  background-color: var(--accent-light);
+}
+.booking-field input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
 .btn-check {
   display: inline-flex; align-items: center; gap: .5rem;
   background: var(--accent); color: #fff;
@@ -183,11 +316,43 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
   margin-top: 1.4rem;
   transition: transform .18s, box-shadow .18s;
-  box-shadow: 0 4px 16px rgba(26,107,74,.22);
+  box-shadow: 0 4px 16px var(--shadow-accent);
 }
-.btn-check:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,74,.3); }
+.btn-check:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--shadow-accent); background: var(--accent-dark); }
 
-/* ── HOW IT WORKS ── */
+/* SECTION: Healthcare Services
+   Grid of 5 service cards showing Doctor, Dentist, Therapist, Cardiologist, Pediatrician.
+   Each card displays icon, description, duration, cost, and "Book Now" button. */
+.healthcare-services-section { padding: 5rem 5%; background: var(--bg); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  gap: 2rem; margin-top: 2.5rem;
+}
+.service-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 2rem;
+  text-align: center; transition: transform .2s, box-shadow .2s;
+}
+.service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px var(--shadow-accent); }
+.service-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.service-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: .3rem; color: var(--ink); }
+.service-specialty { font-size: .85rem; color: var(--accent); font-weight: 600; margin-bottom: .8rem; }
+.service-desc { font-size: .9rem; color: var(--ink-muted); margin-bottom: 1rem; line-height: 1.5; }
+.service-details { font-size: .8rem; color: var(--ink-muted); margin-bottom: 1.2rem; }
+.service-details span { font-weight: 600; color: var(--ink); }
+.service-book-btn {
+  display: inline-block;
+  background: var(--accent); color: #fff;
+  padding: .6rem 1.4rem; border-radius: 99px;
+  text-decoration: none; font-size: .9rem; font-weight: 600;
+  transition: transform .18s, box-shadow .18s;
+  box-shadow: 0 4px 12px var(--shadow-accent);
+}
+.service-book-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--shadow-accent); background: var(--accent-dark); }
+
+/* SECTION: How It Works / Process Steps
+   4-step process flow: Create Account → Choose Service → Select Time → Confirm & Email
+   Displayed as card grid with step numbers and icons. */
 .how-section { padding: 5rem 5%; }
 .steps-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
@@ -209,9 +374,11 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
 .step-card p { font-size: .88rem; color: var(--ink-muted); }
 
-/* ── FEATURES ── */
+/* SECTION: Features Highlight
+   Dark background section listing key product benefits (6 feature chips).
+   Used to build credibility and show differentiators. */
 .features-section {
-  background: var(--ink); color: #fff;
+  background: var(--band-bg); color: var(--band-ink);
   padding: 5rem 5%;
   border-radius: 32px; margin: 0 3%;
 }
@@ -236,7 +403,9 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   font-size: .75rem; font-weight: 800;
 }
 
-/* ── SLOTS ── */
+/* SECTION: Available Time Slots
+   Shows today's available/booked appointment slots in a row grid.
+   Slots can be "active" (selected), "booked" (unavailable), or open. */
 .slots-section { padding: 5rem 5%; }
 .slots-header {
   display: flex; justify-content: space-between; align-items: flex-end;
@@ -245,8 +414,15 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .slots-header a {
   font-size: .88rem; color: var(--accent); text-decoration: none; font-weight: 600;
 }
+.slots-summary {
+  margin: 0 0 1.25rem;
+  color: var(--ink-muted);
+  font-size: .92rem;
+}
 .slots-row { display: flex; gap: .8rem; flex-wrap: wrap; }
 .slot {
+  appearance: none;
+  font: inherit;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 12px; padding: .65rem 1.2rem;
@@ -256,13 +432,22 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .slot:hover, .slot.active {
   background: var(--accent); color: #fff; border-color: var(--accent);
 }
+.slot.booked,
+.slot.booked:hover {
+  background: var(--booked-bg);
+  color: var(--ink-muted);
+  border-color: var(--booked-border);
+  cursor: not-allowed;
+}
 .section-subtitle {
   font-size: .55em;
   color: var(--ink-muted);
   font-weight: 500;
 }
 
-/* ── TESTIMONIAL ── */
+/* SECTION: Testimonials
+   User reviews section with star rating and quote.
+   Builds social proof by showing positive customer feedback. */
 .testimonial-section { padding: 5rem 5%; display: flex; justify-content: center; }
 .testimonial-card {
   background: var(--surface); border: 1px solid var(--border);
@@ -278,7 +463,10 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 }
 .testimonial-author { font-size: .82rem; color: var(--ink-muted); font-weight: 600; letter-spacing: .08em; }
 
-/* ── CTA ── */
+
+/* SECTION: Call-to-Action
+   Large banner with headline and primary CTA button.
+   Final conversion section before footer to prompt booking. */
 .cta-section {
   background: var(--accent-light); border-radius: 32px;
   margin: 0 3% 4rem; padding: 5rem 5%;
@@ -290,9 +478,11 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   padding: .9rem 2.4rem;
 }
 
-/* ── FOOTER ── */
+/* SECTION: Footer
+   Dark footer with company info, quick links, legal links, and social icons.
+   Spans all pages; contains contact info and site navigation. */
 footer {
-  background: var(--ink); color: #fff;
+  background: var(--band-bg); color: var(--band-ink);
   padding: 4rem 5% 2rem;
 }
 .footer-top {
