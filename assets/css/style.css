@@ -1,854 +1,854 @@
-/* ============================================================================
-   MEDICAL SMARTBOOKING - UTILITY STYLESHEET
-   ============================================================================
-   This stylesheet provides a utility-class framework for secondary pages:
-   - pages/auth/login.html
-   - pages/auth/register.html
-   - pages/appointments/book-appointment.html
-   - pages/dashboard/my-appointments.html
-   - pages/dashboard/admin-dashboard.html
-   
-   Contains: layout grid, responsive breakpoints, buttons, forms, spacing utilities.
-   ============================================================================ */
+  /* ============================================================================
+    MEDICAL SMARTBOOKING - UTILITY STYLESHEET
+    ============================================================================
+    This stylesheet provides a utility-class framework for secondary pages:
+    - pages/auth/login.html
+    - pages/auth/register.html
+    - pages/appointments/book-appointment.html
+    - pages/dashboard/my-appointments.html
+    - pages/dashboard/admin-dashboard.html
+    
+    Contains: layout grid, responsive breakpoints, buttons, forms, spacing utilities.
+    ============================================================================ */
 
-* {
-  box-sizing: border-box;
-}
-
-:root {
-  --bg: #edfdf9;
-  --surface: #ffffff;
-  --ink: #102a2a;
-  --ink-muted: #55706d;
-  --accent: #0f766e;
-  --accent-dark: #115e59;
-  --accent-light: #ccfbf1;
-  --secondary: #14b8a6;
-  --border: #cde8e1;
-  --success: #16a34a;
-  --warning: #f59e0b;
-  --danger: #dc2626;
-  --nav-bg: rgba(237,253,249,0.9);
-  --surface-soft: #f8fafc;
-  --input-bg: #ffffff;
-  --input-focus: rgba(15,118,110,.14);
-  --input-hover-bg: #f8fffd;
-  --date-field-bg: linear-gradient(180deg, #ffffff 0%, #f8fffd 100%);
-  --table-head-bg: #f8fafc;
-  --badge-muted-bg: #64748b;
-  color-scheme: light;
-}
-
-html[data-theme="dark"] {
-  --bg: #071a19;
-  --surface: #0d2422;
-  --surface-soft: #12312e;
-  --ink: #ecfdf9;
-  --ink-muted: #9fc9c3;
-  --accent: #2dd4bf;
-  --accent-dark: #14b8a6;
-  --accent-light: #134e4a;
-  --secondary: #5eead4;
-  --border: #1f4b46;
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --danger: #f87171;
-  --nav-bg: rgba(7,26,25,0.9);
-  --input-bg: #12312e;
-  --input-focus: rgba(45,212,191,.18);
-  --input-hover-bg: #173b37;
-  --date-field-bg: linear-gradient(180deg, #173b37 0%, #12312e 100%);
-  --table-head-bg: #12312e;
-  --badge-muted-bg: #475569;
-  color-scheme: dark;
-}
-
-body {
-  margin: 0;
-  color: var(--ink);
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity .32s ease, transform .32s ease;
-}
-
-body.page-ready {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-body.page-leaving {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-.container {
-  width: min(1120px, 92%);
-  margin: 0 auto;
-}
-
-.bg-white {
-  background: var(--nav-bg);
-}
-
-.border-bottom {
-  border-bottom: 1px solid var(--border);
-}
-
-/* SECTION: Navigation Components
-   Responsive navbar with mobile toggle support.
-   Used in: auth pages, appointment pages, dashboard pages. */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--nav-bg);
-  backdrop-filter: blur(14px);
-}
-
-.navbar .container {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  min-height: 68px;
-}
-
-.navbar-toggler {
-  margin-left: auto;
-  width: 40px;
-  height: 36px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  cursor: pointer;
-}
-
-.navbar-toggler-icon {
-  display: block;
-  width: 18px;
-  height: 2px;
-  margin: 0 auto;
-  background: var(--accent);
-  position: relative;
-}
-
-.navbar-toggler-icon::before,
-.navbar-toggler-icon::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 18px;
-  height: 2px;
-  background: var(--accent);
-}
-
-.navbar-toggler-icon::before {
-  top: -6px;
-}
-
-.navbar-toggler-icon::after {
-  top: 6px;
-}
-
-.collapse {
-  display: none;
-  width: 100%;
-}
-
-.collapse.show {
-  display: block;
-}
-
-.navbar-collapse {
-  margin-left: auto;
-}
-
-.navbar-nav {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: flex-start;
-}
-
-/* SECTION: Form Controls (Input, Select, Labels)
-   Used in: Login, Register, Book Appointment forms.
-   Provides consistent styling for form elements across pages. */
-.nav-link {
-  display: inline-block;
-  color: var(--ink-muted);
-  text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 500;
-  transition: color .2s;
-}
-
-.nav-link.active,
-.nav-link:hover {
-  color: var(--accent);
-}
-
-.theme-toggle {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--ink);
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  cursor: pointer;
-  font: inherit;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .2s, border-color .2s, color .2s, transform .18s;
-}
-
-.theme-toggle:hover {
-  background: var(--accent-light);
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-1px);
-}
-
-/* SECTION: Button Styles
-   Reusable button classes: .btn, .btn-dark, .btn-outline-secondary, .btn-sm
-   Used across all utility-styled pages for actions and navigation. */
-.btn {
-  display: inline-block;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  padding: 0.6rem 1rem;
-  text-decoration: none;
-  cursor: pointer;
-  font: inherit;
-}
-
-.btn-sm {
-  padding: 0.45rem 1.2rem;
-  font-size: 0.88rem;
-}
-
-.btn-dark {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-  border-radius: 99px;
-}
-
-.btn-dark:hover {
-  background: var(--accent-dark);
-  border-color: var(--accent-dark);
-}
-
-.btn-outline-secondary {
-  color: var(--ink-muted);
-  border-color: var(--border);
-  background: var(--surface);
-}
-
-.btn-outline-secondary:hover {
-  color: var(--ink);
-  border-color: var(--accent);
-}
-
-/* SECTION: Responsive Grid System
-   CSS Grid and Flexbox utilities for responsive layout.
-   Supports mobile-first design with breakpoints at 768px (tablet) and 992px (desktop). */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -0.75rem;
-}
-
-.row > * {
-  width: 100%;
-  padding: 0.75rem;
-}
-
-.col-12 {
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-@media (min-width: 768px) {
-  .col-md-3 {
-    flex: 0 0 25%;
-    max-width: 25%;
+  * {
+    box-sizing: border-box;
   }
 
-  .col-md-4 {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
+  :root {
+    --bg: #edfdf9;
+    --surface: #ffffff;
+    --ink: #102a2a;
+    --ink-muted: #55706d;
+    --accent: #0f766e;
+    --accent-dark: #115e59;
+    --accent-light: #ccfbf1;
+    --secondary: #14b8a6;
+    --border: #cde8e1;
+    --success: #16a34a;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+    --nav-bg: rgba(237,253,249,0.9);
+    --surface-soft: #f8fafc;
+    --input-bg: #ffffff;
+    --input-focus: rgba(15,118,110,.14);
+    --input-hover-bg: #f8fffd;
+    --date-field-bg: linear-gradient(180deg, #ffffff 0%, #f8fffd 100%);
+    --table-head-bg: #f8fafc;
+    --badge-muted-bg: #64748b;
+    color-scheme: light;
   }
 
-  .col-md-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
+  html[data-theme="dark"] {
+    --bg: #071a19;
+    --surface: #0d2422;
+    --surface-soft: #12312e;
+    --ink: #ecfdf9;
+    --ink-muted: #9fc9c3;
+    --accent: #2dd4bf;
+    --accent-dark: #14b8a6;
+    --accent-light: #134e4a;
+    --secondary: #5eead4;
+    --border: #1f4b46;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #f87171;
+    --nav-bg: rgba(7,26,25,0.9);
+    --input-bg: #12312e;
+    --input-focus: rgba(45,212,191,.18);
+    --input-hover-bg: #173b37;
+    --date-field-bg: linear-gradient(180deg, #173b37 0%, #12312e 100%);
+    --table-head-bg: #12312e;
+    --badge-muted-bg: #475569;
+    color-scheme: dark;
   }
 
-  .p-md-5 {
-    padding: 3rem;
+  body {
+    margin: 0;
+    color: var(--ink);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .32s ease, transform .32s ease;
   }
-}
 
-@media (min-width: 992px) {
-  .navbar-expand-lg .navbar-toggler {
+  body.page-ready {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  body.page-leaving {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .container {
+    width: min(1120px, 92%);
+    margin: 0 auto;
+  }
+
+  .bg-white {
+    background: var(--nav-bg);
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* SECTION: Navigation Components
+    Responsive navbar with mobile toggle support.
+    Used in: auth pages, appointment pages, dashboard pages. */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+  }
+
+  .navbar .container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 68px;
+  }
+
+  .navbar-toggler {
+    margin-left: auto;
+    width: 40px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    cursor: pointer;
+  }
+
+  .navbar-toggler-icon {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin: 0 auto;
+    background: var(--accent);
+    position: relative;
+  }
+
+  .navbar-toggler-icon::before,
+  .navbar-toggler-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .navbar-toggler-icon::before {
+    top: -6px;
+  }
+
+  .navbar-toggler-icon::after {
+    top: 6px;
+  }
+
+  .collapse {
+    display: none;
+    width: 100%;
+  }
+
+  .collapse.show {
+    display: block;
+  }
+
+  .navbar-collapse {
+    margin-left: auto;
+  }
+
+  .navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  /* SECTION: Form Controls (Input, Select, Labels)
+    Used in: Login, Register, Book Appointment forms.
+    Provides consistent styling for form elements across pages. */
+  .nav-link {
+    display: inline-block;
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: color .2s;
+  }
+
+  .nav-link.active,
+  .nav-link:hover {
+    color: var(--accent);
+  }
+
+  .theme-toggle {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    cursor: pointer;
+    font: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, border-color .2s, color .2s, transform .18s;
+  }
+
+  .theme-toggle:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* SECTION: Button Styles
+    Reusable button classes: .btn, .btn-dark, .btn-outline-secondary, .btn-sm
+    Used across all utility-styled pages for actions and navigation. */
+  .btn {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .btn-sm {
+    padding: 0.45rem 1.2rem;
+    font-size: 0.88rem;
+  }
+
+  .btn-dark {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    border-radius: 99px;
+  }
+
+  .btn-dark:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+  }
+
+  .btn-outline-secondary {
+    color: var(--ink-muted);
+    border-color: var(--border);
+    background: var(--surface);
+  }
+
+  .btn-outline-secondary:hover {
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+
+  /* SECTION: Responsive Grid System
+    CSS Grid and Flexbox utilities for responsive layout.
+    Supports mobile-first design with breakpoints at 768px (tablet) and 992px (desktop). */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -0.75rem;
+  }
+
+  .row > * {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .col-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .col-md-3 {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+
+    .col-md-4 {
+      flex: 0 0 33.333333%;
+      max-width: 33.333333%;
+    }
+
+    .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .p-md-5 {
+      padding: 3rem;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .navbar-expand-lg .navbar-toggler {
+      display: none;
+    }
+
+    .navbar-expand-lg .collapse {
+      display: block;
+      width: auto;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .col-lg-5 {
+      flex: 0 0 41.666667%;
+      max-width: 41.666667%;
+    }
+
+    .col-lg-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .col-lg-7 {
+      flex: 0 0 58.333333%;
+      max-width: 58.333333%;
+    }
+
+    .ms-lg-2 {
+      margin-left: 0.5rem;
+    }
+
+    .gap-lg-2 {
+      gap: 2rem;
+    }
+
+    .align-items-lg-center {
+      align-items: center;
+    }
+  }
+
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .p-3 {
+    padding: 1rem;
+  }
+
+  .p-4 {
+    padding: 1.5rem;
+  }
+
+  .px-4 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ms-auto {
+    margin-left: auto;
+  }
+
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  .mt-4 {
+    margin-top: 1.5rem;
+  }
+
+  .mb-0 {
+    margin-bottom: 0;
+  }
+
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 1rem;
+  }
+
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+
+  .g-3 > * {
+    padding: 0.75rem;
+  }
+
+  .g-4 {
+    margin: -1rem;
+  }
+
+  .g-4 > * {
+    padding: 1rem;
+  }
+
+  .gap-2 {
+    gap: 0.5rem;
+  }
+
+  /* SECTION: Spacing & Layout Utilities
+    Padding, margin, display, and alignment utilities.
+    Classes like: .p-4, .mb-3, .mt-2, .d-flex, .text-center, etc. */
+  .d-flex {
+    display: flex;
+  }
+
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  .justify-content-between {
+    justify-content: space-between;
+  }
+
+  .align-items-center {
+    align-items: center;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-secondary {
+    color: var(--ink-muted);
+  }
+
+  /* SECTION: Typography Utilities
+    Font size classes (.h1 through .h5, .display-6, .lead, .fs-5)
+    and text styling (.fw-bold, .text-secondary). */
+  .small,
+  small {
+    font-size: 0.875em;
+  }
+
+  .fw-bold {
+    font-weight: 700;
+  }
+
+  .h-100 {
+    height: 100%;
+  }
+
+  .d-none {
     display: none;
   }
 
-  .navbar-expand-lg .collapse {
+  .rounded {
+    border-radius: 0.6rem;
+  }
+
+  .border {
+    border: 1px solid var(--border);
+  }
+
+  .bg-light {
+    background: var(--surface-soft);
+  }
+
+  .display-6 {
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
+
+  .lead {
+    font-size: 1.1rem;
+    color: var(--ink-muted);
+  }
+
+  .h2 {
+    font-size: 1.8rem;
+  }
+
+  .h3 {
+    font-size: 1.5rem;
+  }
+
+  .h4 {
+    font-size: 1.25rem;
+  }
+
+  .h5 {
+    font-size: 1.1rem;
+  }
+
+  .fs-5 {
+    font-size: 1.25rem;
+  }
+
+  /* SECTION: Form Styling
+    Label and form input utilities used in auth and booking pages. */
+  .form-label {
     display: block;
-    width: auto;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.95rem;
   }
 
-  .navbar-expand-lg .navbar-nav {
-    flex-direction: row;
+  .form-control,
+  .form-select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.72rem 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    font: inherit;
+    background: var(--input-bg);
+    color: var(--ink);
+    transition: background .2s, border-color .2s, box-shadow .2s;
+  }
+
+  .form-select {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding-right: 2.6rem;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+      linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    appearance: none;
+  }
+
+  .form-control[type="date"] {
+    min-height: 52px;
+    padding-right: 1rem;
+    border-radius: 16px;
+    background: var(--date-field-bg);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
+  }
+
+  .form-control:hover,
+  .form-select:hover {
+    background-color: var(--input-hover-bg);
+    border-color: var(--accent);
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--input-focus);
+  }
+
+  .form-control[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: .82;
+    padding: .34rem;
+    border-radius: 999px;
+    background-color: var(--accent-light);
+  }
+
+  .form-control[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
+
+  /* Date Picker Styles */
+  .date-picker {
+    position: relative;
+  }
+
+  .date-picker-trigger {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.72rem 0.85rem;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    font: inherit;
+    background: var(--input-bg);
+    color: var(--ink);
+    transition: background .2s, border-color .2s, box-shadow .2s;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
+    text-align: left;
+    padding-right: 2.6rem;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+      linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    background-color: var(--input-bg);
   }
 
-  .col-lg-5 {
-    flex: 0 0 41.666667%;
-    max-width: 41.666667%;
+  .date-picker-trigger:hover {
+    background-color: var(--input-hover-bg);
+    border-color: var(--accent);
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+      linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
   }
 
-  .col-lg-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
+  .date-picker-trigger:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--input-focus);
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+      linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 50%,
+      calc(100% - 12px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
   }
 
-  .col-lg-7 {
-    flex: 0 0 58.333333%;
-    max-width: 58.333333%;
+  .date-picker-value {
+    flex: 1;
+    padding-right: 0.5rem;
   }
 
-  .ms-lg-2 {
-    margin-left: 0.5rem;
+  .date-picker-icon {
+    display: none;
   }
 
-  .gap-lg-2 {
-    gap: 2rem;
+  .date-picker-popover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    margin-top: 0.5rem;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
   }
 
-  .align-items-lg-center {
+  .date-picker-panel {
+    padding: 1.25rem;
+    background: var(--surface);
+    border-radius: 14px;
+  }
+
+  .date-picker-head {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
   }
-}
 
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.py-5 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-.p-3 {
-  padding: 1rem;
-}
-
-.p-4 {
-  padding: 1.5rem;
-}
-
-.px-4 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ms-auto {
-  margin-left: auto;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.mt-4 {
-  margin-top: 1.5rem;
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-3 {
-  margin-bottom: 1rem;
-}
-
-.mb-4 {
-  margin-bottom: 1.5rem;
-}
-
-.g-3 > * {
-  padding: 0.75rem;
-}
-
-.g-4 {
-  margin: -1rem;
-}
-
-.g-4 > * {
-  padding: 1rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
-/* SECTION: Spacing & Layout Utilities
-   Padding, margin, display, and alignment utilities.
-   Classes like: .p-4, .mb-3, .mt-2, .d-flex, .text-center, etc. */
-.d-flex {
-  display: flex;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.justify-content-between {
-  justify-content: space-between;
-}
-
-.align-items-center {
-  align-items: center;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-secondary {
-  color: var(--ink-muted);
-}
-
-/* SECTION: Typography Utilities
-   Font size classes (.h1 through .h5, .display-6, .lead, .fs-5)
-   and text styling (.fw-bold, .text-secondary). */
-.small,
-small {
-  font-size: 0.875em;
-}
-
-.fw-bold {
-  font-weight: 700;
-}
-
-.h-100 {
-  height: 100%;
-}
-
-.d-none {
-  display: none;
-}
-
-.rounded {
-  border-radius: 0.6rem;
-}
-
-.border {
-  border: 1px solid var(--border);
-}
-
-.bg-light {
-  background: var(--surface-soft);
-}
-
-.display-6 {
-  font-size: clamp(2rem, 3vw, 3rem);
-}
-
-.lead {
-  font-size: 1.1rem;
-  color: var(--ink-muted);
-}
-
-.h2 {
-  font-size: 1.8rem;
-}
-
-.h3 {
-  font-size: 1.5rem;
-}
-
-.h4 {
-  font-size: 1.25rem;
-}
-
-.h5 {
-  font-size: 1.1rem;
-}
-
-.fs-5 {
-  font-size: 1.25rem;
-}
-
-/* SECTION: Form Styling
-   Label and form input utilities used in auth and booking pages. */
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--ink);
-  font-size: 0.95rem;
-}
-
-.form-control,
-.form-select {
-  width: 100%;
-  min-height: 44px;
-  padding: 0.72rem 0.85rem;
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  font: inherit;
-  background: var(--input-bg);
-  color: var(--ink);
-  transition: background .2s, border-color .2s, box-shadow .2s;
-}
-
-.form-select {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0;
-  padding-right: 2.6rem;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--accent) 50%),
-    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) 50%,
-    calc(100% - 12px) 50%;
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-  appearance: none;
-}
-
-.form-control[type="date"] {
-  min-height: 52px;
-  padding-right: 1rem;
-  border-radius: 16px;
-  background: var(--date-field-bg);
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
-}
-
-.form-control:hover,
-.form-select:hover {
-  background-color: var(--input-hover-bg);
-  border-color: var(--accent);
-}
-
-.form-control:focus,
-.form-select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--input-focus);
-}
-
-.form-control[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: .82;
-  padding: .34rem;
-  border-radius: 999px;
-  background-color: var(--accent-light);
-}
-
-.form-control[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
-}
-
-/* Date Picker Styles */
-.date-picker {
-  position: relative;
-}
-
-.date-picker-trigger {
-  width: 100%;
-  min-height: 44px;
-  padding: 0.72rem 0.85rem;
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  font: inherit;
-  background: var(--input-bg);
-  color: var(--ink);
-  transition: background .2s, border-color .2s, box-shadow .2s;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: left;
-  padding-right: 2.6rem;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--accent) 50%),
-    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) 50%,
-    calc(100% - 12px) 50%;
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-  background-color: var(--input-bg);
-}
-
-.date-picker-trigger:hover {
-  background-color: var(--input-hover-bg);
-  border-color: var(--accent);
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--accent) 50%),
-    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) 50%,
-    calc(100% - 12px) 50%;
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-}
-
-.date-picker-trigger:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--input-focus);
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--accent) 50%),
-    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) 50%,
-    calc(100% - 12px) 50%;
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-}
-
-.date-picker-value {
-  flex: 1;
-  padding-right: 0.5rem;
-}
-
-.date-picker-icon {
-  display: none;
-}
-
-.date-picker-popover {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  margin-top: 0.5rem;
-  background: var(--surface);
-  border: 2px solid var(--accent);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  min-width: 300px;
-}
-
-.date-picker-panel {
-  padding: 1.25rem;
-  background: var(--surface);
-  border-radius: 14px;
-}
-
-.date-picker-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.date-picker-title {
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--ink);
-}
-
-.date-picker-nav {
-  background: none;
-  border: none;
-  color: var(--accent);
-  cursor: pointer;
-  font-size: 1.4rem;
-  padding: 0.25rem 0.5rem;
-  transition: color .2s;
-  line-height: 1;
-}
-
-.date-picker-nav:hover {
-  color: var(--accent-dark);
-}
-
-.date-picker-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  margin-bottom: 0.75rem;
-  text-align: center;
-}
-
-.date-picker-weekdays span {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--ink-muted);
-  padding: 4px 0;
-  min-width: 32px;
-}
-
-.date-picker-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-.date-picker-grid button {
-  min-height: auto;
-  padding: 6px 2px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--ink);
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background .15s;
-  font-family: inherit;
-  min-width: 32px;
-}
-
-.date-picker-grid button:hover {
-  background: var(--accent-light);
-  color: var(--accent);
-}
-
-.date-picker-grid button.selected {
-  background: var(--accent);
-  color: #fff;
-  font-weight: 700;
-}
-
-.date-picker-grid button.today {
-  background: var(--accent);
-  color: #fff;
-  font-weight: 700;
-}
-
-.date-picker-grid button:disabled {
-  color: var(--calendar-other);
-  cursor: not-allowed;
-  opacity: 1;
-}
-
-.date-picker-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-.date-picker-footer button {
-  background: none;
-  border: none;
-  color: var(--accent);
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: color .2s;
-  padding: 0.5rem 1rem;
-}
-
-.date-picker-footer button:hover {
-  color: var(--accent-dark);
-}
-
-.date-picker-input {
-  display: none;
-}
-
-.table-responsive {
-  overflow-x: auto;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th {
-  background: var(--table-head-bg);
-  color: var(--ink);
-}
-
-.table th,
-.table td {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-
-.align-middle td,
-.align-middle th {
-  vertical-align: middle;
-}
-
-.badge {
-  display: inline-block;
-  padding: 0.3rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.text-bg-secondary {
-  color: #fff;
-  background: var(--badge-muted-bg);
-}
-
-.text-bg-success {
-  color: #fff;
-  background: var(--success);
-}
-
-.text-bg-warning {
-  color: var(--ink);
-  background: var(--warning);
-}
-
-.list-group {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 0.7rem;
-}
-
-.list-group-item {
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.list-group-item:last-child {
-  border-bottom: none;
-}
-
-.alert {
-  padding: 0.8rem 1rem;
-  border-radius: 0.6rem;
-  border: 1px solid transparent;
-}
-
-.alert-success {
-  background: var(--accent-light);
-  border-color: var(--border);
-  color: var(--accent);
-}
+  .date-picker-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+
+  .date-picker-nav {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 1.4rem;
+    padding: 0.25rem 0.5rem;
+    transition: color .2s;
+    line-height: 1;
+  }
+
+  .date-picker-nav:hover {
+    color: var(--accent-dark);
+  }
+
+  .date-picker-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .date-picker-weekdays span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+    padding: 4px 0;
+    min-width: 32px;
+  }
+
+  .date-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .date-picker-grid button {
+    min-height: auto;
+    padding: 6px 2px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background .15s;
+    font-family: inherit;
+    min-width: 32px;
+  }
+
+  .date-picker-grid button:hover {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .date-picker-grid button.selected {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .date-picker-grid button.today {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .date-picker-grid button:disabled {
+    color: var(--calendar-other);
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  .date-picker-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .date-picker-footer button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: color .2s;
+    padding: 0.5rem 1rem;
+  }
+
+  .date-picker-footer button:hover {
+    color: var(--accent-dark);
+  }
+
+  .date-picker-input {
+    display: none;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th {
+    background: var(--table-head-bg);
+    color: var(--ink);
+  }
+
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .align-middle td,
+  .align-middle th {
+    vertical-align: middle;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.3rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .text-bg-secondary {
+    color: #fff;
+    background: var(--badge-muted-bg);
+  }
+
+  .text-bg-success {
+    color: #fff;
+    background: var(--success);
+  }
+
+  .text-bg-warning {
+    color: var(--ink);
+    background: var(--warning);
+  }
+
+  .list-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 0.7rem;
+  }
+
+  .list-group-item {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .list-group-item:last-child {
+    border-bottom: none;
+  }
+
+  .alert {
+    padding: 0.8rem 1rem;
+    border-radius: 0.6rem;
+    border: 1px solid transparent;
+  }
+
+  .alert-success {
+    background: var(--accent-light);
+    border-color: var(--border);
+    color: var(--accent);
+  }

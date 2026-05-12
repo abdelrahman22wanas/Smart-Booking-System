@@ -46,5 +46,43 @@
   </main>
 
   <script src="../../assets/js/script.js"></script>
+  <script>
+    // Update navbar based on login status
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentUser = localStorage.getItem('sb_current_user');
+      const loginLink = document.querySelector('a[href*="login.html"].btn');
+      const registerLink = document.querySelector('a[href*="register.html"]');
+      
+      if (currentUser && loginLink) {
+        loginLink.style.display = 'none';
+        if (registerLink) registerLink.style.display = 'none';
+        
+        // Create profile link
+        const profileLi = document.createElement('li');
+        profileLi.className = 'nav-item';
+        const profileLink = document.createElement('a');
+        profileLink.href = 'profile.html';
+        profileLink.className = 'btn btn-dark btn-sm ms-lg-2';
+        profileLink.textContent = 'Profile';
+        profileLi.appendChild(profileLink);
+        loginLink.parentElement.parentElement.insertBefore(profileLi, loginLink.parentElement);
+        
+        // Create logout button
+        const logoutLi = document.createElement('li');
+        logoutLi.className = 'nav-item';
+        const logoutBtn = document.createElement('button');
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.style.cssText = 'background: #dc2626; color: white; border: none; padding: 0.375rem 0.75rem; border-radius: 6px; font-size: 0.875rem; font-weight: 500; cursor: pointer; margin-left: 0.5rem; transition: background 0.2s;';
+        logoutBtn.addEventListener('mouseenter', () => logoutBtn.style.background = '#991b1b');
+        logoutBtn.addEventListener('mouseleave', () => logoutBtn.style.background = '#dc2626');
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('sb_current_user');
+          window.location.href = '../../smartbooking.html';
+        });
+        logoutLi.appendChild(logoutBtn);
+        loginLink.parentElement.parentElement.insertBefore(logoutLi, loginLink.parentElement);
+      }
+    });
+  </script>
 </body>
 </html>
