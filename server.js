@@ -199,6 +199,111 @@ async function handleApi(request, response, url) {
       return;
     }
 
+    if (request.method === 'GET' && url.pathname === '/api/user') {
+      const email = normalizeEmail(url.searchParams.get('email'));
+      if (!email) {
+        sendJson(response, 400, { message: 'Email parameter is required.' });
+        return;
+      }
+
+      const row = db.prepare('SELECT id, first_name, last_name, email, phone FROM users WHERE email = ?').get(email);
+      if (!row) {
+        sendJson(response, 404, { message: 'User not found.' });
+        return;
+      }
+
+      sendJson(response, 200, {
+        user: {
+          id: row.id,
+          firstName: row.first_name,
+          lastName: row.last_name,
+          email: row.email,
+          phone: row.phone
+        }
+      });
+      return;
+    }
+
+    if (request.method === 'PUT' && url.pathname === '/api/user') {
+      const body = await readJson(request);
+      const email = normalizeEmail(body.email);
+      const firstName = String(body.firstName || '').trim();
+      const lastName = String(body.lastName || '').trim();
+      const phone = String(body.phone || '').trim();
+
+      if (!email || !firstName || !lastName || !phone) {
+        sendJson(response, 400, { message: 'Please provide all required fields.' });
+        return;
+      }
+
+      const result = db.prepare(`
+        UPDATE users SET first_name = ?, last_name = ?, phone = ? WHERE email = ?
+      `).run(firstName, lastName, phone, email);
+
+      if (result.changes === 0) {
+        sendJson(response, 404, { message: 'User not found.' });
+        return;
+      }
+
+      sendJson(response, 200, { message: 'Profile updated successfully.' });
+      return;
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/user/change-password') {
+      const body = await readJson(request);
+      const email = normalizeEmail(body.email);
+      const currentPassword = String(body.currentPassword || '');
+      const newPassword = String(body.newPassword || '');
+
+      if (!email || !currentPassword || !newPassword) {
+        sendJson(response, 400, { message: 'Please provide all required fields.' });
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        sendJson(response, 400, { message: 'New password must be at least 8 characters.' });
+        return;
+      }
+
+      const row = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+      if (!row) {
+        sendJson(response, 404, { message: 'User not found.' });
+        return;
+      }
+
+      if (!verifyPassword(currentPassword, row.password)) {
+        sendJson(response, 401, { message: 'Current password is incorrect.' });
+        return;
+      }
+
+      const hashedPassword = hashPassword(newPassword);
+      db.prepare('UPDATE users SET password = ? WHERE email = ?').run(hashedPassword, email);
+
+      sendJson(response, 200, { message: 'Password changed successfully.' });
+      return;
+    }
+
+    if (request.method === 'DELETE' && url.pathname === '/api/user') {
+      const body = await readJson(request);
+      const email = normalizeEmail(body.email);
+
+      if (!email) {
+        sendJson(response, 400, { message: 'Email is required.' });
+        return;
+      }
+
+      db.prepare('DELETE FROM appointments WHERE user_email = ?').run(email);
+      const result = db.prepare('DELETE FROM users WHERE email = ?').run(email);
+
+      if (result.changes === 0) {
+        sendJson(response, 404, { message: 'User not found.' });
+        return;
+      }
+
+      sendJson(response, 200, { message: 'Account deleted successfully.' });
+      return;
+    }
+
     if (request.method === 'GET' && url.pathname === '/api/appointments') {
       const email = normalizeEmail(url.searchParams.get('email'));
       const rows = email

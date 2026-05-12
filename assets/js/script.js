@@ -908,11 +908,11 @@ function setupLoginForm() {
 
     setCurrentUser(sessionUser);
 
-    // Show success and redirect to dashboard
+    // Show success and redirect to profile page
     setMessage(message, 'Login successful. Redirecting...', true);
 
     setTimeout(() => {
-      window.location.href = '../../pages/dashboard/my-appointments.html';
+      window.location.href = '../dashboard/profile.html';
     }, 700);
   });
 }

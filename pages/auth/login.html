@@ -6,6 +6,11 @@
   <title>CareFlow — Login</title>
   <!-- Google Fonts for typography -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <script>
+    // Apply saved theme immediately to prevent flash (default to dark)
+    const savedTheme = localStorage.getItem('sb_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -71,7 +76,7 @@
     .theme-toggle:hover { background: var(--accent-light); color: var(--accent); }
 
     .left-panel {
-      background: var(--ink);
+      background: #0d2422;
       padding: 3rem;
       display: flex;
       flex-direction: column;
@@ -278,5 +283,18 @@
 </div>
 
   <script src="../../assets/js/script.js"></script>
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('sb_theme', next);
+      });
+    }
+  </script>
 </body>
 </html>

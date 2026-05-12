@@ -8,6 +8,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <!-- Main homepage styles -->
   <link rel="stylesheet" href="assets/css/styles.css"/>
+  <script>
+    // Check login status and update nav
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentUser = localStorage.getItem('sb_current_user');
+      const loginLink = document.querySelector('a[href="pages/auth/login.html"].btn-login');
+      const registerLink = document.querySelector('a[href="pages/auth/register.html"]');
+      const themeToggle = document.querySelector('.theme-toggle');
+      
+      if (currentUser && loginLink && registerLink && themeToggle) {
+        // User is logged in - hide login/register, show profile/logout
+        loginLink.style.display = 'none';
+        registerLink.style.display = 'none';
+        
+        // Create profile link
+        const profileLi = document.createElement('li');
+        const profileLink = document.createElement('a');
+        profileLink.href = 'pages/dashboard/profile.html';
+        profileLink.className = 'btn-login';
+        profileLink.style.cssText = 'display: inline-block; background: var(--accent); color: #fff; padding: 0.45rem 1.2rem; border-radius: 99px; font-size: 0.88rem; font-weight: 500; text-decoration: none; transition: background .2s;';
+        profileLink.textContent = 'Profile';
+        profileLink.addEventListener('mouseenter', () => profileLink.style.background = 'var(--accent-dark)');
+        profileLink.addEventListener('mouseleave', () => profileLink.style.background = 'var(--accent)');
+        profileLi.appendChild(profileLink);
+        themeToggle.parentElement.parentElement.insertBefore(profileLi, themeToggle.parentElement);
+        
+        // Create logout button
+        const logoutLi = document.createElement('li');
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'btn-login';
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.style.cssText = 'display: inline-block; background: #dc2626; color: #fff; padding: 0.45rem 1.2rem; border: none; border-radius: 99px; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: background .2s; font-family: inherit;';
+        logoutBtn.addEventListener('mouseenter', () => logoutBtn.style.background = '#991b1b');
+        logoutBtn.addEventListener('mouseleave', () => logoutBtn.style.background = '#dc2626');
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('sb_current_user');
+          window.location.href = 'smartbooking.html';
+        });
+        logoutLi.appendChild(logoutBtn);
+        themeToggle.parentElement.parentElement.insertBefore(logoutLi, themeToggle.parentElement.nextSibling);
+      }
+    });
+  </script>
 </head>
 <body>
 
