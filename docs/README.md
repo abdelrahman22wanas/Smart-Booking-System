@@ -39,3 +39,4 @@ CareFlow is a multi-page healthcare appointment booking website. Its service sub
 - `smartbooking.html` uses external CSS/JS from the `assets` folder.
 - Dashboard pages are implemented with basic JavaScript (no framework).
 - Secondary pages use local basic UI classes (no Bootstrap dependency).
+- Full project report: `docs/PROJECT_REPORT.md`.
