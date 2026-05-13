@@ -1,13 +1,15 @@
-  const http = require('node:http');
-  const fs = require('node:fs');
-  const path = require('node:path');
-  const crypto = require('node:crypto');
-  const { DatabaseSync } = require('node:sqlite');
+const http = require('node:http');
+const fs = require('node:fs');
+const path = require('node:path');
+const os = require('node:os');
+const crypto = require('node:crypto');
+const { DatabaseSync } = require('node:sqlite');
 
-  const PORT = Number(process.env.PORT || 3000);
-  const ROOT_DIR = __dirname;
-  const DATA_DIR = path.join(ROOT_DIR, 'data');
-  const DB_PATH = path.join(DATA_DIR, 'smartbooking.sqlite');
+const PORT = Number(process.env.PORT || 3000);
+const ROOT_DIR = __dirname;
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DATA_DIR = IS_VERCEL ? path.join(os.tmpdir(), 'careflow-data') : path.join(ROOT_DIR, 'data');
+const DB_PATH = path.join(DATA_DIR, 'smartbooking.sqlite');
 
   fs.mkdirSync(DATA_DIR, { recursive: true });
 
@@ -174,7 +176,7 @@
         db.prepare(`
           INSERT INTO users (id, first_name, last_name, email, phone, password)
           VALUES (?, ?, ?, ?, ?, ?)
-        `).run(user.id, firstName, lastName, email, phone, password);
+        `).run(user.id, firstName, lastName, email, phone, user.password);
 
         sendJson(response, 201, { user: { id: user.id, name: `${firstName} ${lastName}`, email } });
         return;
@@ -486,18 +488,23 @@
     });
   }
 
-  const server = http.createServer((request, response) => {
-    const url = new URL(request.url, `http://${request.headers.host || 'localhost'}`);
+function requestHandler(request, response) {
+  const url = new URL(request.url, `http://${request.headers.host || 'localhost'}`);
 
-    if (url.pathname.startsWith('/api/')) {
-      handleApi(request, response, url);
-      return;
-    }
+  if (url.pathname.startsWith('/api/')) {
+    handleApi(request, response, url);
+    return;
+  }
 
-    serveStatic(request, response, url);
-  });
+  serveStatic(request, response, url);
+}
 
+if (IS_VERCEL) {
+  module.exports = requestHandler;
+} else {
+  const server = http.createServer(requestHandler);
   server.listen(PORT, () => {
     console.log(`CareFlow running at http://localhost:${PORT}`);
     console.log(`SQLite database: ${DB_PATH}`);
   });
+}
