@@ -9,6 +9,6 @@
     "dev": "node --watch server.js"
   },
   "engines": {
-    "node": ">=25"
+    "node": "24.x"
   }
 }
