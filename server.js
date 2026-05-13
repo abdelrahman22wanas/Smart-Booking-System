@@ -466,7 +466,9 @@ const DB_PATH = path.join(DATA_DIR, 'smartbooking.sqlite');
   }
 
   function serveStatic(request, response, url) {
-    const requestedPath = url.pathname === '/' ? '/smartbooking.html' : decodeURIComponent(url.pathname);
+    const requestedPath = url.pathname === '/'
+      ? 'smartbooking.html'
+      : decodeURIComponent(url.pathname).replace(/^\/+/, '');
     const filePath = path.normalize(path.join(ROOT_DIR, requestedPath));
 
     if (!filePath.startsWith(ROOT_DIR)) {
