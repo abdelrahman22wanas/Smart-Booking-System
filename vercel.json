@@ -2,13 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.js",
+      "src": "backend/server.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
-          "smartbooking.html",
-          "assets/**",
-          "pages/**"
+          "frontend/**"
         ]
       }
     }
@@ -16,7 +14,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "backend/server.js"
     }
   ]
 }

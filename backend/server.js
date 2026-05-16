@@ -6,9 +6,11 @@ const crypto = require('node:crypto');
 const { DatabaseSync } = require('node:sqlite');
 
 const PORT = Number(process.env.PORT || 3000);
-const ROOT_DIR = __dirname;
 const IS_VERCEL = Boolean(process.env.VERCEL);
-const DATA_DIR = IS_VERCEL ? path.join(os.tmpdir(), 'careflow-data') : path.join(ROOT_DIR, 'data');
+// When running from backend/, serve static files from ../frontend
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
+const ROOT_DIR = FRONTEND_DIR;
+const DATA_DIR = IS_VERCEL ? path.join(os.tmpdir(), 'careflow-data') : path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'smartbooking.sqlite');
 
   fs.mkdirSync(DATA_DIR, { recursive: true });
